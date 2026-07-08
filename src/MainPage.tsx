@@ -171,8 +171,8 @@ function MainApp() {
       )}
 
       {videoTransition && (
-        <div className="fixed inset-0 z-[100]" style={{ filter: videoBlurred ? 'blur(8px) brightness(0.7)' : 'none', transition: 'filter 0.8s ease-out' }}>
-          <video ref={(el) => { if (el && !el.dataset.played) { el.dataset.played = '1'; el.play().catch(() => {}); } }} autoPlay muted playsInline onEnded={(e) => { e.target.pause(); setVideoBlurred(true); setTimeout(() => { setVideoTransition(false); setStage(STAGES.MENU); }, 800); }} className="w-full h-full object-cover" style={{ filter: 'brightness(0.85)' }}>
+        <div className="fixed inset-0 z-[100]" style={{ filter: videoBlurred ? 'blur(8px)' : 'none', transition: 'filter 0.8s ease-out', opacity: videoBlurred ? 0.7 : 1, transition: 'opacity 0.8s ease-out' }}>
+          <video ref={(el) => { if (el && !el.dataset.played) { el.dataset.played = '1'; el.play().catch(() => {}); } }} autoPlay muted playsInline onEnded={(e) => { e.target.pause(); setVideoBlurred(true); setTimeout(() => { setVideoTransition(false); setStage(STAGES.MENU); }, 800); }} className="w-full h-full object-cover">
             <source src="https://res.cloudinary.com/dfh97tdty/video/upload/v1783497995/0708_2_crpiub.mp4" type="video/mp4" />
           </video>
         </div>
@@ -219,8 +219,8 @@ function MainApp() {
         </header>
 
         <AnimatePresence mode="wait">
-          {stage === STAGES.INTRO && (
-            <motion.div key="intro" exit={{ opacity: 0, filter: 'blur(10px)' }} transition={{ duration: 0.8, ease: 'easeInOut' }} className="absolute inset-0 flex flex-col items-center justify-center px-4" style={{ opacity: heroFading ? 0 : 1, transition: "opacity 0.4s ease-out" }} >
+          {stage === STAGES.INTRO && !videoTransition && (
+            <motion.div key="intro" exit={{ opacity: 0, filter: 'blur(10px)' }} transition={{ duration: 0.5, ease: 'easeInOut' }} className="absolute inset-0 flex flex-col items-center justify-center px-4">
               <div className="overflow-hidden flex flex-wrap justify-center">
                 {'KBK STUDIO'.split('').map((char, i) => (
                   <motion.span key={i} custom={i} variants={letterVariants} initial="hidden" animate="visible"
