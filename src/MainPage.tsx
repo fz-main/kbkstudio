@@ -50,6 +50,9 @@ function MainApp() {
   const bgVideoRef = useRef<HTMLVideoElement>(null);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const closeLightbox = () => setLightboxImage(null);
+  const [heroFading, setHeroFading] = useState(false);
+  const [showHeroVideo, setShowHeroVideo] = useState(false);
+  const [videoBlurred, setVideoBlurred] = useState(false);
 
   const showCard = useCallback(() => {
     setShowTransition(false);
