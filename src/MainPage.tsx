@@ -267,23 +267,7 @@ function MainApp() {
                           enterLabel={t.enterModule} />
                       </motion.div>
                     ))}
-                  </div>
-                    {SERVICE_CATEGORIES.filter(cat => SERVICES.some(s => s.category === cat.id)).map((cat, i) => {
-                      const isOdd = i % 2 === 1;
-                      const isCenter = i % 3 === 2;
-                      return (
-                        <div key={cat.id} className={`flex ${isCenter ? 'justify-center' : isOdd ? 'justify-end pr-[10%]' : 'justify-start pl-[10%]'}`} style={{ marginTop: isOdd ? '8px' : '0' }}>
-                          <motion.div initial={{ opacity: 0, x: isOdd ? 30 : -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: i * 0.08 }}>
-                            <MenuButton service={{ id: cat.id, title: cat.title, shortTitle: cat.title, subtitle: `${SERVICES.filter(s => s.category === cat.id).length} služeb`, desc: '', benefits: [], process: [], price: '', time: '', durationMinutes: 0, category: cat.id, video: '', transition: '', position: [0,0,0], color: '#e5d3b3' }}
-                              translatedTitle={cat.title}
-                              translatedSubtitle={`${SERVICES.filter(s => s.category === cat.id).length} služeb`}
-                              onClick={() => { setActiveCategory(cat); setStage(STAGES.MENU); }}
-                              enterLabel={t.enterModule} />
-                          </motion.div>
-                        </div>
-                      );
-                    })}
-                  </div>
+                   </div>
                 </div>
                 <div className="shrink-0 mt-4">
                   <ContactsBar t={t} />
