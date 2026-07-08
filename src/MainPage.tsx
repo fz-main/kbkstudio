@@ -172,9 +172,9 @@ function MainApp() {
         </div>
       )}
 
-      {videoTransition && (
-        <div className="fixed inset-0 z-[100]" style={{ filter: videoBlurred ? 'blur(8px)' : 'none', transition: 'filter 0.8s ease-out', opacity: videoBlurred ? 0.7 : 1, transition: 'opacity 0.8s ease-out' }}>
-          <video ref={(el) => { if (el && !el.dataset.played) { el.dataset.played = '1'; el.play().catch(() => {}); } }} autoPlay muted playsInline onEnded={(e) => { e.target.pause(); setVideoBlurred(true); setTimeout(() => { setVideoTransition(false); setStage(STAGES.MENU); }, 800); }} className="w-full h-full object-cover">
+      {(videoTransition || videoBlurred) && (
+        <div className="fixed inset-0 z-[1]" style={{ filter: videoBlurred ? 'blur(8px)' : 'none', transition: 'filter 0.8s ease-out', opacity: videoBlurred ? 0.6 : 1 }}>
+          <video ref={(el) => { if (el && !el.dataset.played) { el.dataset.played = '1'; el.play().catch(() => {}); } }} autoPlay muted playsInline onEnded={(e) => { e.target.pause(); setVideoBlurred(true); setTimeout(() => { setStage(STAGES.MENU); }, 800); }} className="w-full h-full object-cover">
             <source src="https://res.cloudinary.com/dfh97tdty/video/upload/v1783497995/0708_2_crpiub.mp4" type="video/mp4" />
           </video>
         </div>
@@ -248,7 +248,7 @@ function MainApp() {
           )}
 
           {stage === STAGES.MENU && !isTransitioning && !showTransition && (
-            <motion.div key="menu" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="absolute inset-0 pointer-events-auto z-[5]">
+            <motion.div key="menu" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="absolute inset-0 pointer-events-auto z-[10]">
               <div className="w-full h-full flex flex-col" style={{ touchAction: 'pan-y' }}>
                 <div className="flex-1 px-4 md:px-8 pt-[100px] md:pt-[130px] pb-20 overflow-hidden">
                   <div className="text-center mb-4 md:mb-7">
