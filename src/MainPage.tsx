@@ -168,13 +168,12 @@ function MainApp() {
       )}
 
       {showHeroVideo && (
-        <div className="fixed inset-0 z-[1]" style={{ transition: 'filter 1.5s ease-in-out, opacity 1.5s ease-in-out', filter: videoBlurred ? 'blur(15px)' : 'none', opacity: videoBlurred ? 0.6 : 1 }}>
+        <div className="fixed inset-0 z-[1]" style={{ transition: 'filter 1.5s ease-in-out, opacity 1.5s ease-in-out', filter: videoBlurred ? 'blur(15px)' : 'none', opacity: videoBlurred ? 0.5 : 1 }}>
           <video autoPlay muted playsInline onEnded={(e) => { e.target.pause(); setVideoBlurred(true); }} className="w-full h-full object-cover">
             <source src="https://res.cloudinary.com/dfh97tdty/video/upload/v1783497995/0708_2_crpiub.mp4" type="video/mp4" />
           </video>
-          <div className="absolute inset-0 bg-black/50" />
+          <div className="absolute inset-0 transition-opacity duration-1000" style={{ background: 'rgba(0,0,0,0)', opacity: videoBlurred ? 0.6 : 0 }} />
         </div>
-      )}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <ThreeScene stage={stage} activeService={activeService} isTransitioning={isTransitioning} onServiceClick={handleServiceClick} />
       </div>
