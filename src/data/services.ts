@@ -901,6 +901,42 @@ export const SERVICES: Service[] = [
     color: '#e5d3b3',
     bookingUrl: 'https://kbkstudio.cz',
   },
+  {
+    id: 'carbon-peel',
+    title: 'LASER CarbonPeel',
+    shortTitle: 'Carbon Peel',
+    subtitle: 'Carbon Peel',
+    desc: 'Carbon peel kombinuje laserové ošetření s uhlíkovým gelem pro redukci akné, vyhlazení vrásek a zpevnění pleti.',
+    benefits: ['Redukce akné', 'Vyhlazení jemných vrásek', 'Zpevnění pleti', 'Zesvětlení pigmentových skvrn', 'Zatáhnutí pórů'],
+    process: ['Aplikace uhlíkového gelu', 'Laserové ošetření', 'Závěrečná péče'],
+    price: '2 490 Kč',
+    time: '60 min',
+    durationMinutes: 60,
+    category: 'carbon-peel',
+    video: '',
+    transition: '',
+    position: [0, 0, 0],
+    color: '#e5d3b3',
+    bookingUrl: 'https://kbkstudio.cz'
+  },
+  {
+    id: 'skoleni-kurz',
+    title: 'Školení – kurz permanentního make-upu',
+    shortTitle: 'Školení',
+    subtitle: 'Školení',
+    desc: 'Profesionální školení v oblasti permanentního make-upu a kosmetických procedur.',
+    benefits: ['Certifikát', 'Praktická výuka', 'Individuální přístup', 'Práce s profesionálními přístroji'],
+    process: ['Teoretická část', 'Praktická cvičení', 'Práce na modelce', 'Závěrečná certifikace'],
+    price: 'Dle dohody',
+    time: 'Dle kurzu',
+    durationMinutes: 480,
+    category: 'skoleni',
+    video: '',
+    transition: '',
+    position: [0, 0, 0],
+    color: '#e5d3b3',
+    bookingUrl: 'https://kbkstudio.cz'
+  },
 ];
 
 export const getServicesByCategory = (categoryId: string) =>
