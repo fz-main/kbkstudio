@@ -169,7 +169,7 @@ function MainApp() {
 
       {showHeroVideo && (
         <div className="fixed inset-0 z-[1]" style={{ transition: 'filter 1.5s ease-in-out, opacity 1.5s ease-in-out', filter: videoBlurred ? 'blur(15px)' : 'none', opacity: videoBlurred ? 0.6 : 1 }}>
-          <video autoPlay muted playsInline onEnded={() => setVideoBlurred(true)} className="w-full h-full object-cover">
+          <video autoPlay muted playsInline onEnded={(e) => { e.target.pause(); setVideoBlurred(true); }} className="w-full h-full object-cover">
             <source src="https://res.cloudinary.com/dfh97tdty/video/upload/v1783497995/0708_2_crpiub.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-black/50" />
@@ -248,7 +248,7 @@ function MainApp() {
           )}
 
           {stage === STAGES.MENU && !isTransitioning && !showTransition && (
-            <motion.div key="menu" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="absolute inset-0 pointer-events-auto z-[5]" style={{ opacity: videoBlurred ? 1 : 0, transition: "opacity 0.8s ease-in 0.3s" }}>
+            <motion.div key="menu" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="absolute inset-0 pointer-events-auto z-[5]" style={{ opacity: videoBlurred ? 1 : 0, transition: "opacity 1s ease-in 0.5s" }}>
               <div className="w-full h-full flex flex-col" style={{ touchAction: 'pan-y' }}>
                 <div className="flex-1 px-4 md:px-8 pt-[100px] md:pt-[130px] pb-20 overflow-hidden">
                   <div className="text-center mb-4 md:mb-7">
