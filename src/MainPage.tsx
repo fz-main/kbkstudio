@@ -250,13 +250,13 @@ function MainApp() {
           {stage === STAGES.MENU && !isTransitioning && !showTransition && (
             <motion.div key="menu" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="absolute inset-0 pointer-events-auto z-[5]">
               <div className="w-full h-full flex flex-col" style={{ touchAction: 'pan-y' }}>
-                <div className="flex-1 px-4 md:px-8 pt-0 md:pt-[30px] pb-20 overflow-hidden">
-                  <div className="text-center mb-2 md:mb-4">
-                    <div className="font-monument text-[8px] md:text-[9px] tracking-[0.3em] text-[#e5d3b3] uppercase">Kategorie</div>
-                    <h2 className="font-editorial text-lg md:text-2xl">{t.servicesTitle || 'Služby'}</h2>
+                <div className="flex-1 px-4 md:px-8 pt-[75px] md:pt-[105px] pb-20 overflow-hidden">
+                  <div className="text-center mb-3 md:mb-6">
+                    <div className="font-monument text-[9px] md:text-[10px] tracking-[0.3em] text-[#e5d3b3] uppercase mb-1">Kategorie</div>
+                    <h2 className="font-editorial text-xl md:text-3xl">{t.servicesTitle || 'Služby'}</h2>
                   </div>
                   {/* 9 categories: 3 rows x 3 cols */}
-                  <div className="grid grid-cols-3 gap-y-6 md:gap-y-10 w-full max-w-4xl mx-auto">
+                  <div className="grid grid-cols-3 gap-y-8 md:gap-y-12 w-full max-w-4xl mx-auto">
                     {SERVICE_CATEGORIES.filter(cat => SERVICES.some(s => s.category === cat.id)).map((cat, i) => (
                       <motion.div key={cat.id} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: i * 0.06 }}
                         className="flex justify-center">
