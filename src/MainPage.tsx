@@ -93,9 +93,9 @@ function MainApp() {
     const handleWheel = (e: WheelEvent) => {
       const now = Date.now();
       if (now - lastScrollTime.current < COOLDOWN) return;
-      if (stage === STAGES.INTRO && e.deltaY > 0) {
-        setHeroFading(true);
-        setTimeout(() => setVideoTransition(true), 500);
+        if (stage === STAGES.INTRO && e.deltaY > 0) {
+          setHeroFading(true);
+          setTimeout(() => setVideoTransition(true), 400);
         lastScrollTime.current = now;
       } else if (stage === STAGES.MENU && e.deltaY < 0) {
         setStage(STAGES.INTRO);
@@ -174,7 +174,7 @@ function MainApp() {
 
       {(videoTransition || videoBlurred) && (
         <div className="fixed inset-0 z-[1]" style={{ filter: videoBlurred ? 'blur(8px)' : 'none', transition: 'filter 0.8s ease-out', opacity: videoBlurred ? 0.6 : 1 }}>
-          <video ref={(el) => { if (el && !el.dataset.played) { el.dataset.played = '1'; el.play().catch(() => {}); } }} autoPlay muted playsInline onEnded={(e) => { e.target.pause(); setVideoBlurred(true); setTimeout(() => { setStage(STAGES.MENU); }, 800); }} className="w-full h-full object-cover">
+          <video ref={(el) => { if (el && !el.dataset.played) { el.dataset.played = '1'; el.play().catch(() => {}); } }} autoPlay muted playsInline onEnded={(e) => { e.target.pause(); setTimeout(() => setVideoBlurred(true), 300); setTimeout(() => setStage(STAGES.MENU), 500); }} className="w-full h-full object-cover">
             <source src="https://res.cloudinary.com/dfh97tdty/video/upload/v1783497995/0708_2_crpiub.mp4" type="video/mp4" />
           </video>
         </div>
@@ -224,7 +224,7 @@ function MainApp() {
 
         <AnimatePresence mode="wait">
           {stage === STAGES.INTRO && (
-            <motion.div key="intro" className="absolute inset-0 flex flex-col items-center justify-center px-4" style={{ opacity: heroFading ? 0 : 1, transition: 'opacity 0.5s ease-out' }}>
+            <motion.div key="intro" className="absolute inset-0 flex flex-col items-center justify-center px-4" style={{ opacity: heroFading ? 0 : 1, transition: 'opacity 0.4s ease-out' }}>
               <div className="overflow-hidden flex flex-wrap justify-center">
                 {'KBK STUDIO'.split('').map((char, i) => (
                   <motion.span key={i} custom={i} variants={letterVariants} initial="hidden" animate="visible"
