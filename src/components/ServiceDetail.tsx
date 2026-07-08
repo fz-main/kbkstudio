@@ -39,7 +39,7 @@ export default function ServiceDetail({ activeService, onBack, lang: _lang, t }:
       <div className="min-h-full px-4 md:px-16 pt-16 pb-16 flex flex-col gap-6 max-w-5xl mx-auto">
 
         {/* SERVICE CARD */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-start">
+        <div className="flex flex-col gap-6">
 
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1 }}
             className="glass-panel p-6 md:p-10 rounded-3xl">
