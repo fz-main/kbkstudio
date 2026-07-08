@@ -19,7 +19,7 @@ export default function MenuButton({ service, translatedTitle, translatedSubtitl
     >
       <motion.div
         variants={{ hover: { scale: 1.05, color: '#e5d3b3', transition: { duration: 0.3 } } }}
-        className="font-editorial text-sm sm:text-base md:text-lg lg:text-xl italic text-center text-white drop-shadow-2xl leading-tight"
+        className="font-editorial text-base sm:text-lg md:text-xl lg:text-2xl italic text-center text-white drop-shadow-2xl leading-tight"
       >
         {translatedTitle || service.title}
       </motion.div>
