@@ -224,7 +224,7 @@ function MainApp() {
 
         <AnimatePresence mode="wait">
           {stage === STAGES.INTRO && !showHeroVideo && (
-            <motion.div key="intro" exit={{ opacity: 0, filter: 'blur(10px)' }} transition={{ duration: 0.8, ease: 'easeInOut' }} className="absolute inset-0 flex flex-col items-center justify-center px-4" style={{ opacity: heroFading ? 0 : 1, transition: 'opacity 0.5s ease-out' }}>
+            <motion.div key="intro" exit={{ opacity: 0, filter: 'blur(10px)' }} transition={{ duration: 0.8, ease: 'easeInOut' }} className="absolute inset-0 flex flex-col items-center justify-center px-4" >
               <div className="overflow-hidden flex flex-wrap justify-center">
                 {'KBK STUDIO'.split('').map((char, i) => (
                   <motion.span key={i} custom={i} variants={letterVariants} initial="hidden" animate="visible"
@@ -279,7 +279,7 @@ function MainApp() {
           {stage === STAGES.ABOUT && (
             <motion.div key="about" initial={{ opacity: 0, y: 60 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 60 }} transition={{ duration: 1, ease: 'easeOut' }}
               className="absolute inset-0 pointer-events-auto overflow-y-auto flex flex-col px-6 py-20">
-              <button onClick={() => { setHeroFading(true); setShowHeroVideo(true); setTimeout(() => setStage(STAGES.MENU), 600); }}
+              <button onClick={() => setStage(STAGES.MENU)}
                 className="fixed top-16 md:top-20 left-4 md:left-8 font-monument text-[10px] md:text-xs tracking-widest hover:text-[#e5d3b3] transition-colors z-50 flex items-center gap-3 group bg-black/60 px-3 py-2 rounded-full backdrop-blur-sm">
                 <span className="w-4 h-[1px] bg-white group-hover:bg-[#e5d3b3] transition-colors" />{t.back}
               </button>
