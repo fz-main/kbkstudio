@@ -95,20 +95,6 @@ export default function ServiceDetail({ activeService, onBack, lang: _lang, t }:
             </div>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 0.3 }}
-            className="rounded-3xl overflow-hidden relative shadow-2xl"
-            style={{ aspectRatio: '9/16', maxHeight: '70vh' }}>
-            {activeService.video ? (
-              <video autoPlay muted loop playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover">
-                <source src={activeService.video} type="video/mp4" />
-              </video>
-            ) : (
-              <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] flex items-center justify-center">
-                <span className="text-[#e5d3b3] font-monument text-sm tracking-widest">Video se brzy objeví</span>
-              </div>
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-          </motion.div>
         </div>
 
         {/* MASTER BLOCK */}

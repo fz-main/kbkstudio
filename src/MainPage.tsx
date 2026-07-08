@@ -95,7 +95,7 @@ function MainApp() {
       if (now - lastScrollTime.current < COOLDOWN) return;
         if (stage === STAGES.INTRO && e.deltaY > 0) {
           setHeroFading(true);
-          setTimeout(() => setVideoTransition(true), 400);
+          setTimeout(() => setVideoTransition(true), 100);
         lastScrollTime.current = now;
       } else if (stage === STAGES.MENU && e.deltaY < 0) {
         setStage(STAGES.INTRO);
@@ -287,15 +287,15 @@ function MainApp() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
                   <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.2, delay: 0.2, ease: 'easeOut' }}
                     className="flex flex-col gap-4 cursor-pointer">
-                    <div className="flex justify-center" onClick={() => setLightboxImage(t.aboutPhoto)}>
-                      <img src={t.aboutPhoto} alt="Beata Kučerová" className="w-full max-w-sm object-cover rounded-3xl shadow-2xl transition-transform hover:scale-105" />
+                    <div className="flex justify-center" onClick={() => setLightboxImage('https://www.kbkstudio.cz/wp-content/uploads/2022/12/IMG_6986-scaled.jpg')}>
+                      <img src="https://www.kbkstudio.cz/wp-content/uploads/2022/12/IMG_6986-scaled.jpg" alt="Beata Kučerová" className="w-full max-w-sm object-cover rounded-3xl shadow-2xl transition-transform hover:scale-105" />
                     </div>
                     <div className="text-center">
                       <div className="font-editorial text-lg md:text-xl">Beata Kučerová</div>
                       <div className="font-montreal text-xs text-[#a3a3a3]">Zakladatelka · PMU specialistka</div>
                     </div>
-                    <div className="flex justify-center" onClick={() => setLightboxImage('https://www.kbkstudio.cz/wp-content/uploads/2025/05/462849486_18275678536246136_6638648624377151157_n.jpg')}>
-                      <img src="https://www.kbkstudio.cz/wp-content/uploads/2025/05/462849486_18275678536246136_6638648624377151157_n.jpg" alt="Michaela Nováková" className="w-full max-w-sm object-cover rounded-3xl shadow-2xl transition-transform hover:scale-105" />
+                    <div className="flex justify-center" onClick={() => setLightboxImage('https://www.kbkstudio.cz/wp-content/uploads/2022/02/F93B0480-0DF6-4BDC-9BB5-5BBA27F9D454-scaled.jpg')}>
+                      <img src="https://www.kbkstudio.cz/wp-content/uploads/2022/02/F93B0480-0DF6-4BDC-9BB5-5BBA27F9D454-scaled.jpg" alt="Michaela Nováková" className="w-full max-w-sm object-cover rounded-3xl shadow-2xl transition-transform hover:scale-105" />
                     </div>
                     <div className="text-center">
                       <div className="font-editorial text-lg md:text-xl">Michaela Nováková</div>
