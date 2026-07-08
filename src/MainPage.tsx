@@ -52,6 +52,7 @@ function MainApp() {
   const closeLightbox = () => setLightboxImage(null);
   const [activeCategory, setActiveCategory] = useState<any>(null);
   const [videoTransition, setVideoTransition] = useState(false);
+  const [heroFading, setHeroFading] = useState(false);
   const [videoBlurred, setVideoBlurred] = useState(false);
 
 
@@ -219,7 +220,7 @@ function MainApp() {
 
         <AnimatePresence mode="wait">
           {stage === STAGES.INTRO && (
-            <motion.div key="intro" exit={{ opacity: 0, filter: 'blur(10px)' }} transition={{ duration: 0.8, ease: 'easeInOut' }} className="absolute inset-0 flex flex-col items-center justify-center px-4" >
+            <motion.div key="intro" exit={{ opacity: 0, filter: 'blur(10px)' }} transition={{ duration: 0.8, ease: 'easeInOut' }} className="absolute inset-0 flex flex-col items-center justify-center px-4" style={{ opacity: heroFading ? 0 : 1, transition: "opacity 0.4s ease-out" }} >
               <div className="overflow-hidden flex flex-wrap justify-center">
                 {'KBK STUDIO'.split('').map((char, i) => (
                   <motion.span key={i} custom={i} variants={letterVariants} initial="hidden" animate="visible"
@@ -234,7 +235,7 @@ function MainApp() {
                   <motion.div animate={{ y: ['-100%', '100%'] }} transition={{ repeat: Infinity, duration: 1.5, ease: 'linear' }} className="absolute inset-0 bg-white" />
                 </div>
                 <motion.button initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5, duration: 1 }}
-                  onClick={() => setVideoTransition(true)}
+                  onClick={() => { setHeroFading(true); setTimeout(() => setVideoTransition(true), 500); }}
                   className="mt-6 px-6 py-3 border border-white/30 rounded-full font-montreal text-[10px] md:text-xs uppercase tracking-widest text-white/80 hover:bg-white/10 hover:border-white/50 transition-all pointer-events-auto">
                   {t.scrollToServices || 'Služby ↓'}
                 </motion.button>
