@@ -172,15 +172,7 @@ function MainApp() {
       )}
 
       {showHeroVideo && (
-        <div className="fixed inset-0 z-[1]" style={{ background: '#0a0a0a' }}>
-          <div className="absolute inset-0" style={{
-            background: 'linear-gradient(135deg, rgba(229,211,179,0.3) 0%, rgba(10,10,10,1) 100%)',
-            opacity: videoBlurred ? 1 : 0,
-            transition: 'opacity 0.3s ease-in'
-          }} />
-          <video autoPlay muted playsInline className="w-full h-full object-cover" style={{ opacity: videoBlurred ? 0 : 1, transition: 'opacity 0.5s ease-out' }}>
-            <source src="https://res.cloudinary.com/dfh97tdty/video/upload/v1783497995/0708_2_crpiub.mp4" type="video/mp4" />
-          </video>
+        <div className="fixed inset-0 z-[1] bg-[#0a0a0a]" style={{ animation: 'fadeOut 0.8s ease-in forwards' }}>
         </div>
       )}
       <div className="absolute inset-0 z-0 pointer-events-none">
