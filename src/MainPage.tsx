@@ -95,7 +95,7 @@ function MainApp() {
       if (now - lastScrollTime.current < COOLDOWN) return;
         if (stage === STAGES.INTRO && e.deltaY > 0) {
           setHeroFading(true);
-          setTimeout(() => setVideoTransition(true), 400);
+          setTimeout(() => { setVideoTransition(true); setStage(STAGES.MENU); }, 400);
         lastScrollTime.current = now;
       } else if (stage === STAGES.MENU && e.deltaY < 0) {
         setStage(STAGES.INTRO);
@@ -121,7 +121,7 @@ function MainApp() {
       if (Math.abs(deltaY) > 50) {
         if (stage === STAGES.INTRO && deltaY > 0) {
           setHeroFading(true);
-          setTimeout(() => setVideoTransition(true), 500);
+          setTimeout(() => { setVideoTransition(true); setStage(STAGES.MENU); }, 500);
           lastScrollTime.current = now;
         } else if (stage === STAGES.MENU && deltaY < 0) {
           setVideoTransition(false);
