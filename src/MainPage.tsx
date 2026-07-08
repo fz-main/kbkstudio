@@ -122,7 +122,7 @@ function MainApp() {
         if (stage === STAGES.INTRO && deltaY > 0) {
           setHeroFading(true);
           setShowHeroVideo(true);
-          setTimeout(() => setStage(STAGES.MENU), 600);
+        setTimeout(() => setStage(STAGES.MENU), 500);
           lastScrollTime.current = now;
         } else if (stage === STAGES.MENU && deltaY < 0) {
           setStage(STAGES.INTRO);
@@ -172,11 +172,15 @@ function MainApp() {
       )}
 
       {showHeroVideo && (
-        <div className="fixed inset-0 z-[1]">
-          <video ref={(el) => { if (el && !el.dataset.started) { el.dataset.started = '1'; el.play(); setTimeout(() => { el.pause(); setVideoBlurred(true); }, 1500); } }} autoPlay muted playsInline className="w-full h-full object-cover" style={{ filter: videoBlurred ? 'blur(15px)' : 'none', transition: 'filter 0.5s ease-out' }}>
+        <div className="fixed inset-0 z-[1]" style={{ background: '#0a0a0a' }}>
+          <div className="absolute inset-0" style={{
+            background: 'linear-gradient(135deg, rgba(229,211,179,0.3) 0%, rgba(10,10,10,1) 100%)',
+            opacity: videoBlurred ? 1 : 0,
+            transition: 'opacity 0.3s ease-in'
+          }} />
+          <video autoPlay muted playsInline className="w-full h-full object-cover" style={{ opacity: videoBlurred ? 0 : 1, transition: 'opacity 0.5s ease-out' }}>
             <source src="https://res.cloudinary.com/dfh97tdty/video/upload/v1783497995/0708_2_crpiub.mp4" type="video/mp4" />
           </video>
-          <div className="absolute inset-0 transition-opacity duration-500" style={{ opacity: videoBlurred ? 0.7 : 0, background: 'black' }} />
         </div>
       )}
       <div className="absolute inset-0 z-0 pointer-events-none">
