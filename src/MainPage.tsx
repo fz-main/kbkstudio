@@ -243,26 +243,27 @@ function MainApp() {
 
           {stage === STAGES.MENU && !isTransitioning && !showTransition && (
             <motion.div key="menu" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="absolute inset-0 pointer-events-auto z-[5]">
-              <div className="w-full h-full relative" style={{ touchAction: 'pan-y' }}>
-                {/* Desktop: scattered positions */}
-                <div className="hidden lg:block absolute inset-0">
-                  {SERVICES.length >= 1 && <div className="absolute" style={{ top: '8%', left: '5%' }}><motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}><MenuButton service={SERVICES[0]} translatedTitle={t.services[SERVICES[0].id as keyof typeof t.services]?.title} translatedSubtitle={t.services[SERVICES[0].id as keyof typeof t.services]?.subtitle} onClick={() => handleServiceClick(SERVICES[0])} enterLabel={t.enterModule} /></motion.div></div>}
-                  {SERVICES.length >= 2 && <div className="absolute" style={{ top: '8%', right: '5%' }}><motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}><MenuButton service={SERVICES[1]} translatedTitle={t.services[SERVICES[1].id as keyof typeof t.services]?.title} translatedSubtitle={t.services[SERVICES[1].id as keyof typeof t.services]?.subtitle} onClick={() => handleServiceClick(SERVICES[1])} enterLabel={t.enterModule} /></motion.div></div>}
-                  {SERVICES.length >= 3 && <div className="absolute" style={{ top: '40%', left: '50%', transform: 'translateX(-50%)' }}><motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}><MenuButton service={SERVICES[2]} translatedTitle={t.services[SERVICES[2].id as keyof typeof t.services]?.title} translatedSubtitle={t.services[SERVICES[2].id as keyof typeof t.services]?.subtitle} onClick={() => handleServiceClick(SERVICES[2])} enterLabel={t.enterModule} /></motion.div></div>}
-                  {SERVICES.length >= 4 && <div className="absolute" style={{ bottom: '20%', left: '5%' }}><motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}><MenuButton service={SERVICES[3]} translatedTitle={t.services[SERVICES[3].id as keyof typeof t.services]?.title} translatedSubtitle={t.services[SERVICES[3].id as keyof typeof t.services]?.subtitle} onClick={() => handleServiceClick(SERVICES[3])} enterLabel={t.enterModule} /></motion.div></div>}
-                  {SERVICES.length >= 5 && <div className="absolute" style={{ bottom: '20%', right: '5%' }}><motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}><MenuButton service={SERVICES[4]} translatedTitle={t.services[SERVICES[4].id as keyof typeof t.services]?.title} translatedSubtitle={t.services[SERVICES[4].id as keyof typeof t.services]?.subtitle} onClick={() => handleServiceClick(SERVICES[4])} enterLabel={t.enterModule} /></motion.div></div>}
-                  {SERVICES.length >= 6 && <div className="absolute" style={{ bottom: '5%', left: '25%' }}><motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}><MenuButton service={SERVICES[5]} translatedTitle={t.services[SERVICES[5].id as keyof typeof t.services]?.title} translatedSubtitle={t.services[SERVICES[5].id as keyof typeof t.services]?.subtitle} onClick={() => handleServiceClick(SERVICES[5])} enterLabel={t.enterModule} /></motion.div></div>}
-                  {SERVICES.length >= 7 && <div className="absolute" style={{ top: '25%', left: '25%' }}><motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }}><MenuButton service={SERVICES[6]} translatedTitle={t.services[SERVICES[6].id as keyof typeof t.services]?.title} translatedSubtitle={t.services[SERVICES[6].id as keyof typeof t.services]?.subtitle} onClick={() => handleServiceClick(SERVICES[6])} enterLabel={t.enterModule} /></motion.div></div>}
-                  {SERVICES.length >= 8 && <div className="absolute" style={{ top: '25%', right: '25%' }}><motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}><MenuButton service={SERVICES[7]} translatedTitle={t.services[SERVICES[7].id as keyof typeof t.services]?.title} translatedSubtitle={t.services[SERVICES[7].id as keyof typeof t.services]?.subtitle} onClick={() => handleServiceClick(SERVICES[7])} enterLabel={t.enterModule} /></motion.div></div>}
-                  {SERVICES.length >= 9 && <div className="absolute" style={{ bottom: '8%', left: '50%', transform: 'translateX(-50%)' }}><motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}><MenuButton service={SERVICES[8]} translatedTitle={t.services[SERVICES[8].id as keyof typeof t.services]?.title} translatedSubtitle={t.services[SERVICES[8].id as keyof typeof t.services]?.subtitle} onClick={() => handleServiceClick(SERVICES[8])} enterLabel={t.enterModule} /></motion.div></div>}
+              <div className="w-full h-full overflow-y-auto flex flex-col" style={{ touchAction: 'pan-y' }}>
+                <div className="flex-1 px-4 md:px-12 pt-4 md:pt-[100px] pb-4 overflow-y-auto">
+                  <div className="text-center mb-4 md:mb-6">
+                    <div className="font-monument text-[9px] md:text-[10px] tracking-[0.3em] text-[#e5d3b3] uppercase mb-2">Kategorie</div>
+                    <h2 className="font-editorial text-xl md:text-3xl">{t.servicesTitle || 'Služby'}</h2>
+                  </div>
+                  {/* Checkerboard / zigzag layout */}
+                  <div className="flex flex-wrap justify-center gap-x-2 gap-y-2 md:gap-x-4 md:gap-y-0 w-full max-w-5xl mx-auto">
+                    {SERVICES.map((srv, i) => {
+                      const isOdd = i % 2 === 1;
+                      return (
+                        <div key={srv.id} className="w-full md:w-[33.33%] flex justify-center" style={{ marginTop: isOdd ? '20px' : '0' }}>
+                          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: i * 0.04 }}>
+                            <MenuButton service={srv} translatedTitle={t.services[srv.id as keyof typeof t.services]?.title} translatedSubtitle={t.services[srv.id as keyof typeof t.services]?.subtitle} onClick={() => handleServiceClick(srv)} enterLabel={t.enterModule} />
+                          </motion.div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-                {/* Mobile: centered list */}
-                <div className="lg:hidden flex flex-col items-center justify-center h-full gap-5 px-8 pt-16 pb-4 overflow-y-auto">
-                  {SERVICES.map((srv) => (
-                    <MenuButton key={srv.id} service={srv} translatedTitle={t.services[srv.id as keyof typeof t.services]?.title} translatedSubtitle={t.services[srv.id as keyof typeof t.services]?.subtitle} onClick={() => handleServiceClick(srv)} enterLabel={t.enterModule} />
-                  ))}
-                </div>
-                <div className="absolute bottom-0 left-0 w-full">
+                <div className="shrink-0">
                   <ContactsBar t={t} />
                 </div>
               </div>
