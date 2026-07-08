@@ -100,7 +100,7 @@ function MainApp() {
       } else if (stage === STAGES.MENU && e.deltaY < 0) {
         setStage(STAGES.INTRO);
         lastScrollTime.current = now;
-      } else if (stage === STAGES.MENU && e.deltaY > 0) {
+      } else if (stage === STAGES.MENU && e.deltaY > 0 && !activeCategory) {
         setStage(STAGES.ABOUT);
         lastScrollTime.current = now;
       } else if (stage === STAGES.ABOUT && e.deltaY < 0) {
