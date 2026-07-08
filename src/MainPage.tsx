@@ -250,13 +250,13 @@ function MainApp() {
           {stage === STAGES.MENU && !isTransitioning && !showTransition && (
             <motion.div key="menu" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="absolute inset-0 pointer-events-auto z-[5]">
               <div className="w-full h-full flex flex-col" style={{ touchAction: 'pan-y' }}>
-                <div className="flex-1 px-4 md:px-8 pt-2 md:pt-[50px] pb-20 overflow-hidden">
-                  <div className="text-center mb-3 md:mb-5">
+                <div className="flex-1 px-4 md:px-8 pt-1 md:pt-[40px] pb-24 overflow-hidden">
+                  <div className="text-center mb-1 md:mb-3">
                     <div className="font-monument text-[9px] md:text-[10px] tracking-[0.3em] text-[#e5d3b3] uppercase mb-1">Kategorie</div>
                     <h2 className="font-editorial text-xl md:text-3xl">{t.servicesTitle || 'Služby'}</h2>
                   </div>
                   {/* 9 categories in checkerboard - all fit on screen */}
-                  <div className="w-full max-w-5xl mx-auto space-y-1 md:space-y-2">
+                  <div className="w-full max-w-5xl mx-auto space-y-0 md:space-y-1">
                     {SERVICE_CATEGORIES.filter(cat => SERVICES.some(s => s.category === cat.id)).map((cat, i) => {
                       const isOdd = i % 2 === 1;
                       const isCenter = i % 3 === 2;
