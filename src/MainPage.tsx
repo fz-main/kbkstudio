@@ -172,11 +172,11 @@ function MainApp() {
       )}
 
       {showHeroVideo && (
-        <div className="fixed inset-0 z-[1]" style={{ transition: 'filter 1.5s ease-in-out, opacity 1.5s ease-in-out', filter: videoBlurred ? 'blur(15px)' : 'none', opacity: videoBlurred ? 0.5 : 1 }}>
-          <video autoPlay muted playsInline onEnded={(e) => { e.target.pause(); setVideoBlurred(true); }} className="w-full h-full object-cover">
+        <div className="fixed inset-0 z-[1]">
+          <video ref={(el) => { if (el && !el.dataset.started) { el.dataset.started = '1'; el.play(); setTimeout(() => { el.pause(); setVideoBlurred(true); }, 1500); } }} autoPlay muted playsInline className="w-full h-full object-cover" style={{ filter: videoBlurred ? 'blur(15px)' : 'none', transition: 'filter 0.5s ease-out' }}>
             <source src="https://res.cloudinary.com/dfh97tdty/video/upload/v1783497995/0708_2_crpiub.mp4" type="video/mp4" />
           </video>
-          <div className="absolute inset-0 transition-opacity duration-1000" style={{ background: 'rgba(0,0,0,0)', opacity: videoBlurred ? 0.6 : 0 }} />
+          <div className="absolute inset-0 transition-opacity duration-500" style={{ opacity: videoBlurred ? 0.7 : 0, background: 'black' }} />
         </div>
       )}
       <div className="absolute inset-0 z-0 pointer-events-none">
