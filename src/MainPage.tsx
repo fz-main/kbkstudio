@@ -158,6 +158,14 @@ function MainApp() {
         </div>
       )}
 
+      {showHeroVideo && (
+        <div className="fixed inset-0 z-[1]" style={{ transition: 'filter 1.5s ease-in-out, opacity 1.5s ease-in-out', filter: videoBlurred ? 'blur(15px)' : 'none', opacity: videoBlurred ? 0.6 : 1 }}>
+          <video autoPlay muted playsInline onEnded={() => setVideoBlurred(true)} className="w-full h-full object-cover">
+            <source src="https://res.cloudinary.com/dfh97tdty/video/upload/v1783497995/0708_2_crpiub.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-black/50" />
+        </div>
+      )}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <ThreeScene stage={stage} activeService={activeService} isTransitioning={isTransitioning} onServiceClick={handleServiceClick} />
       </div>
@@ -206,8 +214,8 @@ function MainApp() {
         </header>
 
         <AnimatePresence mode="wait">
-          {stage === STAGES.INTRO && (
-            <motion.div key="intro" exit={{ opacity: 0, filter: 'blur(20px)', scale: 1.1 }} transition={{ duration: 1.5, ease: 'easeInOut' }} className="absolute inset-0 flex flex-col items-center justify-center px-4">
+          {stage === STAGES.INTRO && !showHeroVideo && (
+            <motion.div key="intro" exit={{ opacity: 0, filter: 'blur(20px)', scale: 1.1 }} transition={{ duration: 1.5, ease: 'easeInOut' }} className="absolute inset-0 flex flex-col items-center justify-center px-4" style={{ opacity: heroFading ? 0 : 1, transition: 'opacity 0.5s ease-out' }}>
               <div className="overflow-hidden flex flex-wrap justify-center">
                 {'KBK STUDIO'.split('').map((char, i) => (
                   <motion.span key={i} custom={i} variants={letterVariants} initial="hidden" animate="visible"
@@ -222,7 +230,7 @@ function MainApp() {
                   <motion.div animate={{ y: ['-100%', '100%'] }} transition={{ repeat: Infinity, duration: 1.5, ease: 'linear' }} className="absolute inset-0 bg-white" />
                 </div>
                 <motion.button initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5, duration: 1 }}
-                  onClick={() => setStage(STAGES.MENU)}
+                  onClick={() => { setHeroFading(true); setShowHeroVideo(true); setTimeout(() => setStage(STAGES.MENU), 600); }}
                   className="mt-6 px-6 py-3 border border-white/30 rounded-full font-montreal text-[10px] md:text-xs uppercase tracking-widest text-white/80 hover:bg-white/10 hover:border-white/50 transition-all pointer-events-auto">
                   {t.scrollToServices || 'Služby ↓'}
                 </motion.button>
@@ -231,32 +239,22 @@ function MainApp() {
           )}
 
           {stage === STAGES.MENU && !isTransitioning && !showTransition && (
-            <motion.div key="menu" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="absolute inset-0 pointer-events-auto">
-              {/* Mobile layout */}
-              <div className="flex lg:hidden flex-col h-full">
-                <div className="flex flex-col items-center justify-center flex-1 gap-5 px-8 pt-16 pb-4 overflow-y-auto">
-                  {SERVICES.map((srv) => (
-                    <MenuButton key={srv.id} service={{ ...srv, title: t.services[srv.id as keyof typeof t.services]?.title || srv.title }} onClick={() => handleServiceClick(srv)} enterLabel={t.enterModule} />
-                  ))}
+            <motion.div key="menu" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="absolute inset-0 pointer-events-auto z-[5]">
+              <div className="w-full h-full overflow-y-auto flex flex-col" style={{ touchAction: 'pan-y' }}>
+                <div className="flex-1 px-3 md:px-8 pt-4 md:pt-[100px] pb-4 overflow-y-auto">
+                  <div className="text-center mb-4 md:mb-6">
+                    <div className="font-monument text-[9px] md:text-[10px] tracking-[0.3em] text-[#e5d3b3] uppercase mb-2">Kategorie</div>
+                    <h2 className="font-editorial text-xl md:text-3xl">{t.servicesTitle || 'Služby'}</h2>
+                  </div>
+                  <div className="flex flex-wrap justify-center gap-x-3 gap-y-3 md:gap-x-6 md:gap-y-5 w-full max-w-6xl mx-auto">
+                    {SERVICES.map((srv, i) => (
+                      <motion.div key={srv.id} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: i * 0.03 }}>
+                        <MenuButton service={srv} translatedTitle={t.services[srv.id as keyof typeof t.services]?.title} translatedSubtitle={t.services[srv.id as keyof typeof t.services]?.subtitle} onClick={() => handleServiceClick(srv)} enterLabel={t.enterModule} />
+                      </motion.div>
+                    ))}
+                  </div>
                 </div>
                 <ContactsBar t={t} />
-              </div>
-
-              {/* Desktop layout */}
-              <div className="hidden lg:flex w-full h-full">
-                {desktopColumns.map((col, i) => {
-                  const colServices = SERVICES.filter(s => col.categories.includes(s.category));
-                  return (
-                    <div key={i} className="flex flex-col items-center justify-center flex-1 h-full gap-6">
-                      {colServices.map((srv) => (
-                        <MenuButton key={srv.id} service={{ ...srv, title: t.services[srv.id as keyof typeof t.services]?.title || srv.title }} onClick={() => handleServiceClick(srv)} enterLabel={t.enterModule} />
-                      ))}
-                    </div>
-                  );
-                })}
-                <div className="absolute bottom-12 left-0 w-full">
-                  <ContactsBar t={t} />
-                </div>
               </div>
             </motion.div>
           )}
