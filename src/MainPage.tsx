@@ -244,17 +244,17 @@ function MainApp() {
           {stage === STAGES.MENU && !isTransitioning && !showTransition && (
             <motion.div key="menu" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="absolute inset-0 pointer-events-auto z-[5]">
               <div className="w-full h-full overflow-y-auto flex flex-col" style={{ touchAction: 'pan-y' }}>
-                <div className="flex-1 px-4 md:px-12 pt-4 md:pt-[100px] pb-4 overflow-y-auto">
-                  <div className="text-center mb-4 md:mb-6">
-                    <div className="font-monument text-[9px] md:text-[10px] tracking-[0.3em] text-[#e5d3b3] uppercase mb-2">Kategorie</div>
-                    <h2 className="font-editorial text-xl md:text-3xl">{t.servicesTitle || 'Služby'}</h2>
+                <div className="flex-1 px-4 md:px-12 pt-4 md:pt-[100px] pb-32 overflow-y-auto">
+                  <div className="text-center mb-3 md:mb-5">
+                    <div className="font-monument text-[8px] md:text-[9px] tracking-[0.3em] text-[#e5d3b3] uppercase mb-1">Kategorie</div>
+                    <h2 className="font-editorial text-lg md:text-2xl">{t.servicesTitle || 'Služby'}</h2>
                   </div>
                   {/* Checkerboard / zigzag layout */}
-                  <div className="flex flex-wrap justify-center gap-x-2 gap-y-2 md:gap-x-4 md:gap-y-0 w-full max-w-5xl mx-auto">
+                  <div className="flex flex-wrap justify-center gap-x-1 gap-y-1 md:gap-x-3 md:gap-y-0 w-full max-w-5xl mx-auto">
                     {SERVICES.map((srv, i) => {
                       const isOdd = i % 2 === 1;
                       return (
-                        <div key={srv.id} className="w-full md:w-[33.33%] flex justify-center" style={{ marginTop: isOdd ? '20px' : '0' }}>
+                        <div key={srv.id} className="w-full md:w-[33.33%] flex justify-center" style={{ marginTop: isOdd ? '16px' : '0' }}>
                           <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: i * 0.04 }}>
                             <MenuButton service={srv} translatedTitle={t.services[srv.id as keyof typeof t.services]?.title} translatedSubtitle={t.services[srv.id as keyof typeof t.services]?.subtitle} onClick={() => handleServiceClick(srv)} enterLabel={t.enterModule} />
                           </motion.div>
@@ -263,7 +263,7 @@ function MainApp() {
                     })}
                   </div>
                 </div>
-                <div className="shrink-0">
+                <div className="shrink-0 mt-8">
                   <ContactsBar t={t} />
                 </div>
               </div>
