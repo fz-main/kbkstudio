@@ -180,9 +180,11 @@ function MainApp() {
         </div>
       )}
 
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <ThreeScene stage={stage} activeService={activeService} isTransitioning={isTransitioning} onServiceClick={handleServiceClick} />
-      </div>
+      {stage === STAGES.INTRO && (
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <ThreeScene stage={stage} activeService={activeService} isTransitioning={isTransitioning} onServiceClick={handleServiceClick} />
+        </div>
+      )}
 
 
 
