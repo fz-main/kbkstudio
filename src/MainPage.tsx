@@ -92,7 +92,7 @@ function MainApp() {
       const now = Date.now();
       if (now - lastScrollTime.current < COOLDOWN) return;
       if (stage === STAGES.INTRO && e.deltaY > 0) {
-        setStage(STAGES.MENU);
+        setVideoTransition(true);
         lastScrollTime.current = now;
       } else if (stage === STAGES.MENU && e.deltaY < 0) {
         setStage(STAGES.INTRO);
@@ -117,9 +117,10 @@ function MainApp() {
       const deltaY = touchStartY - e.changedTouches[0].clientY;
       if (Math.abs(deltaY) > 50) {
         if (stage === STAGES.INTRO && deltaY > 0) {
-          setStage(STAGES.MENU);
+          setVideoTransition(true);
           lastScrollTime.current = now;
         } else if (stage === STAGES.MENU && deltaY < 0) {
+          setVideoTransition(false);
           setStage(STAGES.INTRO);
           lastScrollTime.current = now;
         } else if (stage === STAGES.MENU && deltaY > 0) {
@@ -166,18 +167,19 @@ function MainApp() {
         </div>
       )}
 
+      {videoTransition && (
+        <div className="fixed inset-0 z-[100] bg-black">
+          <video autoPlay muted playsInline onEnded={() => { setVideoTransition(false); setStage(STAGES.MENU); }} className="w-full h-full object-cover">
+            <source src="https://res.cloudinary.com/dfh97tdty/video/upload/v1783497995/0708_2_crpiub.mp4" type="video/mp4" />
+          </video>
+        </div>
+      )}
+
       <div className="absolute inset-0 z-0 pointer-events-none">
         <ThreeScene stage={stage} activeService={activeService} isTransitioning={isTransitioning} onServiceClick={handleServiceClick} />
       </div>
 
-      {(stage === STAGES.MENU || stage === STAGES.SERVICE_DETAIL) && (
-        <div className="absolute inset-0 z-[1] pointer-events-none" style={{ opacity: stage === STAGES.MENU && !showTransition ? 1 : 0, transition: 'opacity 2s ease' }}>
-          <video autoPlay muted loop playsInline className="w-full h-full object-cover object-top">
-            <source src="https://res.cloudinary.com/dfh97tdty/video/upload/v1783497995/0708_2_crpiub.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-black/75" />
-        </div>
-      )}
+
 
       {bgVideoUrl && stage === STAGES.SERVICE_DETAIL && (
         <div className="absolute inset-0 z-[2] pointer-events-none overflow-hidden" style={{ transform: 'scale(1.15)' }}>
