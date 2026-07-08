@@ -286,8 +286,21 @@ function MainApp() {
               <div id="about-scroll-container" className="max-w-5xl w-full mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
                   <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.2, delay: 0.2, ease: 'easeOut' }}
-                    className="flex justify-center cursor-pointer" onClick={() => setLightboxImage(t.aboutPhoto)}>
-                    <img src={t.aboutPhoto} alt="Beata Kučerová" className="w-full max-w-md object-cover rounded-3xl shadow-2xl transition-transform hover:scale-105" />
+                    className="flex flex-col gap-4 cursor-pointer">
+                    <div className="flex justify-center" onClick={() => setLightboxImage(t.aboutPhoto)}>
+                      <img src={t.aboutPhoto} alt="Beata Kučerová" className="w-full max-w-sm object-cover rounded-3xl shadow-2xl transition-transform hover:scale-105" />
+                    </div>
+                    <div className="text-center">
+                      <div className="font-editorial text-lg md:text-xl">Beata Kučerová</div>
+                      <div className="font-montreal text-xs text-[#a3a3a3]">Zakladatelka · PMU specialistka</div>
+                    </div>
+                    <div className="flex justify-center" onClick={() => setLightboxImage('https://www.kbkstudio.cz/wp-content/uploads/2025/05/462849486_18275678536246136_6638648624377151157_n.jpg')}>
+                      <img src="https://www.kbkstudio.cz/wp-content/uploads/2025/05/462849486_18275678536246136_6638648624377151157_n.jpg" alt="Michaela Nováková" className="w-full max-w-sm object-cover rounded-3xl shadow-2xl transition-transform hover:scale-105" />
+                    </div>
+                    <div className="text-center">
+                      <div className="font-editorial text-lg md:text-xl">Michaela Nováková</div>
+                      <div className="font-montreal text-xs text-[#a3a3a3]">Kosmetička</div>
+                    </div>
                   </motion.div>
                   <motion.div initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.2, delay: 0.4, ease: 'easeOut' }}>
                     <div className="font-monument text-[9px] tracking-[0.3em] text-[#e5d3b3] mb-4 uppercase">{t.aboutLabel}</div>
@@ -331,8 +344,8 @@ function MainApp() {
                               <span className="text-[#a3a3a3]">{srv.time}</span>
                             </div>
                           </div>
-                          <button className="px-4 py-2 bg-[#e5d3b3] text-black font-monument text-[9px] tracking-widest rounded-lg shrink-0 ml-4">
-                            Rezervovat
+                          <button className="px-4 py-2 border border-[#e5d3b3] text-[#e5d3b3] font-monument text-[9px] tracking-widest rounded-lg shrink-0 ml-4 hover:bg-[#e5d3b3] hover:text-black transition-colors">
+                            Více informací
                           </button>
                         </div>
                       </motion.div>
