@@ -12,10 +12,10 @@ const galleryItems = [
 ];
 
 interface HelixGalleryProps {
-  t: Translations;
+  title?: string;
 }
 
-export default function HelixGallery({ t }: HelixGalleryProps) {
+export default function HelixGallery({ title }: HelixGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const total = galleryItems.length;
   const containerRef = useRef<HTMLDivElement>(null);
@@ -71,7 +71,7 @@ export default function HelixGallery({ t }: HelixGalleryProps) {
   return (
     <div style={{ width: '100%', minHeight: '500px', padding: '40px 0', marginBottom: '20px' }}>
       <div className="text-center mb-6">
-        <div className="font-monument text-[9px] tracking-[0.3em] text-[#e5d3b3] uppercase">{t.galleryTitle}</div>
+        <div className="font-monument text-[9px] tracking-[0.3em] text-[#e5d3b3] uppercase">{title || 'Galerie'}</div>
       </div>
       <div
         ref={containerRef}

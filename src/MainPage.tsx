@@ -310,7 +310,7 @@ function MainApp() {
                   </motion.div>
                 </div>
                 <Testimonials testimonials={t.testimonialsList} title={t.testimonialsTitle} />
-                <HelixGallery />
+                <HelixGallery title={t.galleryTitle} />
               </div>
             </motion.div>
           )}
