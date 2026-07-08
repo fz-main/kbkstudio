@@ -308,7 +308,7 @@ function MainApp() {
 
           {/* Category Services View */}
           {activeCategory && stage === STAGES.MENU && !isTransitioning && !showTransition && (
-            <motion.div key="category-services" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }} className="absolute inset-0 pointer-events-auto z-[10]">
+            <motion.div key="category-services" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }} className="absolute inset-0 pointer-events-auto z-[15]">
               <div className="w-full h-full overflow-y-auto flex flex-col" style={{ touchAction: 'pan-y' }}>
                 <div className="flex-1 px-4 md:px-8 pt-4 md:pt-[60px] pb-20 overflow-y-auto">
                   <div className="flex items-center gap-4 mb-4">
