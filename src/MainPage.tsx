@@ -244,7 +244,7 @@ function MainApp() {
           {stage === STAGES.MENU && !isTransitioning && !showTransition && (
             <motion.div key="menu" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="absolute inset-0 pointer-events-auto z-[5]">
               <div className="w-full h-full overflow-y-auto flex flex-col" style={{ touchAction: 'pan-y' }}>
-                <div className="flex-1 px-4 md:px-12 pt-2 md:pt-[40px] pb-24 overflow-y-auto">
+                <div className="flex-1 px-4 md:px-16 pt-2 md:pt-[30px] pb-20 overflow-hidden">
                   <div className="text-center mb-2 md:mb-4">
                     <div className="font-monument text-[9px] md:text-[10px] tracking-[0.3em] text-[#e5d3b3] uppercase mb-1">Kategorie</div>
                     <h2 className="font-editorial text-xl md:text-3xl">{t.servicesTitle || 'Služby'}</h2>
