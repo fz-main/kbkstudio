@@ -244,20 +244,32 @@ function MainApp() {
           {stage === STAGES.MENU && !isTransitioning && !showTransition && (
             <motion.div key="menu" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="absolute inset-0 pointer-events-auto z-[5]">
               <div className="w-full h-full overflow-y-auto flex flex-col" style={{ touchAction: 'pan-y' }}>
-                <div className="flex-1 px-4 md:px-8 pt-2 md:pt-[60px] pb-20 overflow-y-auto">
+                <div className="flex-1 px-4 md:px-8 pt-2 md:pt-[50px] pb-20 overflow-y-auto">
                   <div className="text-center mb-3 md:mb-5">
                     <div className="font-monument text-[9px] md:text-[10px] tracking-[0.3em] text-[#e5d3b3] uppercase mb-1">Kategorie</div>
                     <h2 className="font-editorial text-xl md:text-3xl">{t.servicesTitle || 'Služby'}</h2>
                   </div>
-                  {/* Services grid - all services */}
-                  <div className="flex flex-wrap justify-center gap-x-2 gap-y-1 md:gap-x-4 md:gap-y-1 w-full max-w-6xl mx-auto">
-                    {SERVICES.map((srv, i) => (
-                      <motion.div key={srv.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: i * 0.02 }}
-                        className="w-[30%] md:w-[20%] flex justify-center py-1">
-                        <MenuButton service={srv} translatedTitle={t.services[srv.id as keyof typeof t.services]?.title} translatedSubtitle={t.services[srv.id as keyof typeof t.services]?.subtitle} onClick={() => handleServiceClick(srv)} enterLabel={t.enterModule} />
-                      </motion.div>
-                    ))}
-                  </div>
+                  {SERVICE_CATEGORIES.map((cat, catIdx) => {
+                    const catServices = SERVICES.filter(s => s.category === cat.id);
+                    if (catServices.length === 0) return null;
+                    return (
+                      <div key={cat.id} className="mb-4">
+                        <div className="font-monument text-[7px] md:text-[8px] tracking-[0.2em] text-[#a3a3a3] uppercase mb-1 text-center">{cat.title}</div>
+                        <div className="flex flex-wrap justify-center gap-x-2 gap-y-0 w-full max-w-5xl mx-auto">
+                          {catServices.map((srv, i) => {
+                            const isOdd = i % 2 === 1;
+                            return (
+                              <div key={srv.id} className="w-[33%] md:w-[25%] flex justify-center" style={{ marginTop: isOdd ? '8px' : '0' }}>
+                                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: catIdx * 0.1 + i * 0.02 }}>
+                                  <MenuButton service={srv} translatedTitle={t.services[srv.id as keyof typeof t.services]?.title} translatedSubtitle={t.services[srv.id as keyof typeof t.services]?.subtitle} onClick={() => handleServiceClick(srv)} enterLabel={t.enterModule} />
+                                </motion.div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
                 <div className="shrink-0 mt-4">
                   <ContactsBar t={t} />
