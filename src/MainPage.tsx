@@ -52,6 +52,7 @@ function MainApp() {
   const closeLightbox = () => setLightboxImage(null);
   const [activeCategory, setActiveCategory] = useState<any>(null);
   const [videoTransition, setVideoTransition] = useState(false);
+  const [videoBlurred, setVideoBlurred] = useState(false);
 
 
   const showCard = useCallback(() => {
@@ -121,6 +122,7 @@ function MainApp() {
           lastScrollTime.current = now;
         } else if (stage === STAGES.MENU && deltaY < 0) {
           setVideoTransition(false);
+          setVideoBlurred(false);
           setStage(STAGES.INTRO);
           lastScrollTime.current = now;
         } else if (stage === STAGES.MENU && deltaY > 0) {
@@ -168,8 +170,8 @@ function MainApp() {
       )}
 
       {videoTransition && (
-        <div className="fixed inset-0 z-[100] bg-black">
-          <video autoPlay muted playsInline onEnded={() => { setVideoTransition(false); setStage(STAGES.MENU); }} className="w-full h-full object-cover">
+        <div className="fixed inset-0 z-[100]" style={{ filter: videoBlurred ? 'blur(8px) brightness(0.7)' : 'none', transition: 'filter 0.8s ease-out' }}>
+          <video ref={(el) => { if (el && !el.dataset.played) { el.dataset.played = '1'; el.play().catch(() => {}); } }} autoPlay muted playsInline onEnded={(e) => { e.target.pause(); setVideoBlurred(true); setTimeout(() => { setVideoTransition(false); setStage(STAGES.MENU); }, 800); }} className="w-full h-full object-cover" style={{ filter: 'brightness(0.85)' }}>
             <source src="https://res.cloudinary.com/dfh97tdty/video/upload/v1783497995/0708_2_crpiub.mp4" type="video/mp4" />
           </video>
         </div>
