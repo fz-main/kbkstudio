@@ -244,23 +244,67 @@ function MainApp() {
           {stage === STAGES.MENU && !isTransitioning && !showTransition && (
             <motion.div key="menu" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="absolute inset-0 pointer-events-auto z-[5]">
               <div className="w-full h-full overflow-y-auto flex flex-col" style={{ touchAction: 'pan-y' }}>
-                <div className="flex-1 px-4 md:px-12 pt-4 md:pt-[100px] pb-32 overflow-y-auto">
-                  <div className="text-center mb-3 md:mb-5">
-                    <div className="font-monument text-[8px] md:text-[9px] tracking-[0.3em] text-[#e5d3b3] uppercase mb-1">Kategorie</div>
-                    <h2 className="font-editorial text-lg md:text-2xl">{t.servicesTitle || 'Služby'}</h2>
+                <div className="flex-1 px-4 md:px-12 pt-4 md:pt-[60px] pb-32 overflow-y-auto">
+                  <div className="text-center mb-6 md:mb-10">
+                    <div className="font-monument text-[10px] md:text-[12px] tracking-[0.3em] text-[#e5d3b3] uppercase mb-2">Kategorie</div>
+                    <h2 className="font-editorial text-2xl md:text-4xl">{t.servicesTitle || 'Služby'}</h2>
                   </div>
-                  {/* Checkerboard / zigzag layout */}
-                  <div className="flex flex-wrap justify-center gap-x-1 gap-y-1 md:gap-x-3 md:gap-y-0 w-full max-w-5xl mx-auto">
-                    {SERVICES.map((srv, i) => {
-                      const isOdd = i % 2 === 1;
-                      return (
-                        <div key={srv.id} className="w-full md:w-[33.33%] flex justify-center" style={{ marginTop: isOdd ? '16px' : '0' }}>
-                          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: i * 0.04 }}>
-                            <MenuButton service={srv} translatedTitle={t.services[srv.id as keyof typeof t.services]?.title} translatedSubtitle={t.services[srv.id as keyof typeof t.services]?.subtitle} onClick={() => handleServiceClick(srv)} enterLabel={t.enterModule} />
-                          </motion.div>
-                        </div>
-                      );
-                    })}
+                  {/* Checkerboard layout: row1(left+right), row2(center), row3(left+right), etc */}
+                  <div className="w-full max-w-5xl mx-auto space-y-4 md:space-y-6">
+                    {/* Row 1: Kosmetické ošetření (left, wraps), Phi-Ion (right) */}
+                    <div className="flex justify-between items-start">
+                      <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.1 }}
+                        className="w-[45%] text-left" style={{ marginTop: '10px' }}>
+                        <MenuButton service={SERVICES[0]} translatedTitle={t.services[0]?.title || t.services['kosmeticke-ocetreni']?.title} translatedSubtitle={t.services[0]?.subtitle || t.services['kosmeticke-ocetreni']?.subtitle} onClick={() => handleServiceClick(SERVICES[0])} enterLabel={t.enterModule} />
+                      </motion.div>
+                      <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.2 }}
+                        className="w-[45%] text-right" style={{ marginTop: '0px' }}>
+                        <MenuButton service={SERVICES[1]} translatedTitle={t.services[1]?.title || t.services['phi-ion-microneedling']?.title} translatedSubtitle={t.services[1]?.subtitle || t.services['phi-ion-microneedling']?.subtitle} onClick={() => handleServiceClick(SERVICES[1])} enterLabel={t.enterModule} />
+                      </motion.div>
+                    </div>
+                    {/* Row 2: Radiofrekvenční (center) */}
+                    <div className="flex justify-center">
+                      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }}
+                        className="text-center" style={{ marginTop: '0px' }}>
+                        <MenuButton service={SERVICES[2]} translatedTitle={t.services[2]?.title || t.services['radiofrekvencni']?.title} translatedSubtitle={t.services[2]?.subtitle || t.services['radiofrekvencni']?.subtitle} onClick={() => handleServiceClick(SERVICES[2])} enterLabel={t.enterModule} />
+                      </motion.div>
+                    </div>
+                    {/* Row 3: Chemický peeling (left), Carbon Peel (right) */}
+                    <div className="flex justify-between items-start">
+                      <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.4 }}
+                        className="w-[45%] text-left" style={{ marginTop: '10px' }}>
+                        <MenuButton service={SERVICES[3]} translatedTitle={t.services[3]?.title || t.services['chemicky-peeling']?.title} translatedSubtitle={t.services[3]?.subtitle || t.services['chemicky-peeling']?.subtitle} onClick={() => handleServiceClick(SERVICES[3])} enterLabel={t.enterModule} />
+                      </motion.div>
+                      <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.5 }}
+                        className="w-[45%] text-right" style={{ marginTop: '0px' }}>
+                        <MenuButton service={SERVICES[4]} translatedTitle={t.services[4]?.title || t.services['carbon-peel']?.title} translatedSubtitle={t.services[4]?.subtitle || t.services['carbon-peel']?.subtitle} onClick={() => handleServiceClick(SERVICES[4])} enterLabel={t.enterModule} />
+                      </motion.div>
+                    </div>
+                    {/* Row 4: Laser Removal (center) */}
+                    <div className="flex justify-center">
+                      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.6 }}
+                        className="text-center" style={{ marginTop: '0px' }}>
+                        <MenuButton service={SERVICES[5]} translatedTitle={t.services[5]?.title || t.services['pmu-laser-removal']?.title} translatedSubtitle={t.services[5]?.subtitle || t.services['pmu-laser-removal']?.subtitle} onClick={() => handleServiceClick(SERVICES[5])} enterLabel={t.enterModule} />
+                      </motion.div>
+                    </div>
+                    {/* Row 5: PMU (left), Lash Lifting (right) */}
+                    <div className="flex justify-between items-start">
+                      <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.7 }}
+                        className="w-[45%] text-left" style={{ marginTop: '10px' }}>
+                        <MenuButton service={SERVICES[6]} translatedTitle={t.services[6]?.title || t.services['permanentni-make-up']?.title} translatedSubtitle={t.services[6]?.subtitle || t.services['permanentni-make-up']?.subtitle} onClick={() => handleServiceClick(SERVICES[6])} enterLabel={t.enterModule} />
+                      </motion.div>
+                      <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.8 }}
+                        className="w-[45%] text-right" style={{ marginTop: '0px' }}>
+                        <MenuButton service={SERVICES[7]} translatedTitle={t.services[7]?.title || t.services['lash-lifting']?.title} translatedSubtitle={t.services[7]?.subtitle || t.services['lash-lifting']?.subtitle} onClick={() => handleServiceClick(SERVICES[7])} enterLabel={t.enterModule} />
+                      </motion.div>
+                    </div>
+                    {/* Row 6: Školení (center) */}
+                    <div className="flex justify-center">
+                      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.9 }}
+                        className="text-center" style={{ marginTop: '0px' }}>
+                        <MenuButton service={SERVICES[8]} translatedTitle={t.services[8]?.title || t.services['skoleni']?.title} translatedSubtitle={t.services[8]?.subtitle || t.services['skoleni']?.subtitle} onClick={() => handleServiceClick(SERVICES[8])} enterLabel={t.enterModule} />
+                      </motion.div>
+                    </div>
                   </div>
                 </div>
                 <div className="shrink-0 mt-8">
