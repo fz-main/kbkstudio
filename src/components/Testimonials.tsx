@@ -15,12 +15,12 @@ const mobilePositions = [
 ];
 
 interface TestimonialsProps {
-  lang: Lang;
-  t: Translations;
+  testimonials: Array<{ name: string; role: string; text: string; avatar: string }>;
+  title: string;
 }
 
-export default function Testimonials({ t }: TestimonialsProps) {
-  const testimonialsData = t.testimonialsList;
+export default function Testimonials({ testimonials, title }: TestimonialsProps) {
+  const testimonialsData = testimonials;
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
