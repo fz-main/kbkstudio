@@ -250,13 +250,24 @@ function MainApp() {
           {stage === STAGES.MENU && !isTransitioning && !showTransition && (
             <motion.div key="menu" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="absolute inset-0 pointer-events-auto z-[5]">
               <div className="w-full h-full flex flex-col" style={{ touchAction: 'pan-y' }}>
-                <div className="flex-1 px-4 md:px-8 pt-0 md:pt-[30px] pb-24 overflow-hidden">
-                  <div className="text-center mb-0 md:mb-1">
+                <div className="flex-1 px-4 md:px-8 pt-0 md:pt-[30px] pb-20 overflow-hidden">
+                  <div className="text-center mb-2 md:mb-4">
                     <div className="font-monument text-[8px] md:text-[9px] tracking-[0.3em] text-[#e5d3b3] uppercase">Kategorie</div>
                     <h2 className="font-editorial text-lg md:text-2xl">{t.servicesTitle || 'Služby'}</h2>
                   </div>
-                  {/* 9 categories in checkerboard */}
-                  <div className="w-full max-w-5xl mx-auto">
+                  {/* 9 categories: 3 rows x 3 cols */}
+                  <div className="grid grid-cols-3 gap-y-6 md:gap-y-10 w-full max-w-4xl mx-auto">
+                    {SERVICE_CATEGORIES.filter(cat => SERVICES.some(s => s.category === cat.id)).map((cat, i) => (
+                      <motion.div key={cat.id} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: i * 0.06 }}
+                        className="flex justify-center">
+                        <MenuButton service={{ id: cat.id, title: cat.title, shortTitle: cat.title, subtitle: `${SERVICES.filter(s => s.category === cat.id).length} služeb`, desc: '', benefits: [], process: [], price: '', time: '', durationMinutes: 0, category: cat.id, video: '', transition: '', position: [0,0,0], color: '#e5d3b3' }}
+                          translatedTitle={cat.title}
+                          translatedSubtitle={`${SERVICES.filter(s => s.category === cat.id).length} služeb`}
+                          onClick={() => { setActiveCategory(cat); setStage(STAGES.MENU); }}
+                          enterLabel={t.enterModule} />
+                      </motion.div>
+                    ))}
+                  </div>
                     {SERVICE_CATEGORIES.filter(cat => SERVICES.some(s => s.category === cat.id)).map((cat, i) => {
                       const isOdd = i % 2 === 1;
                       const isCenter = i % 3 === 2;
