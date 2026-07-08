@@ -247,7 +247,7 @@ function MainApp() {
             </motion.div>
           )}
 
-          {stage === STAGES.MENU && !isTransitioning && !showTransition && (
+          {stage === STAGES.MENU && !isTransitioning && !showTransition && !activeCategory && (
             <motion.div key="menu" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="absolute inset-0 pointer-events-auto z-[10]">
               <div className="w-full h-full flex flex-col" style={{ touchAction: 'pan-y' }}>
                 <div className="flex-1 px-4 md:px-8 pt-[100px] md:pt-[130px] pb-20 overflow-hidden">
