@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { STAGES, SERVICES } from './data/services';
+import { STAGES, SERVICES, SERVICE_CATEGORIES } from './data/services';
 import type { Service } from './data/services';
 import { translations } from './lib/i18n';
 import type { Lang } from './lib/i18n';
