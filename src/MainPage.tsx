@@ -174,6 +174,7 @@ function MainApp() {
           </video>
           <div className="absolute inset-0 transition-opacity duration-1000" style={{ background: 'rgba(0,0,0,0)', opacity: videoBlurred ? 0.6 : 0 }} />
         </div>
+      )}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <ThreeScene stage={stage} activeService={activeService} isTransitioning={isTransitioning} onServiceClick={handleServiceClick} />
       </div>
