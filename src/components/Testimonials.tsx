@@ -66,7 +66,7 @@ export default function Testimonials({ testimonials, title }: TestimonialsProps)
   return (
     <div className="relative w-full mt-20 mb-16" style={{ minHeight: '550px' }}>
       <div className="text-center mb-4">
-        <div className="font-monument text-[9px] tracking-[0.3em] text-[#e5d3b3] uppercase">{t.testimonialsTitle}</div>
+        <div className="font-monument text-[9px] tracking-[0.3em] text-[#e5d3b3] uppercase">{title}</div>
         <div className="font-editorial text-2xl md:text-3xl text-white mt-1">Real stories, real results</div>
       </div>
 
