@@ -50,6 +50,7 @@ function MainApp() {
   const bgVideoRef = useRef<HTMLVideoElement>(null);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const closeLightbox = () => setLightboxImage(null);
+  const [activeCategory, setActiveCategory] = useState<any>(null);
   const [heroFading, setHeroFading] = useState(false);
   const [showHeroVideo, setShowHeroVideo] = useState(false);
   const [videoBlurred, setVideoBlurred] = useState(false);
@@ -61,6 +62,11 @@ function MainApp() {
   }, []);
 
   const handleServiceClick = (service: Service) => {
+    // If clicking a category (has no price/duration), show category services
+    if (!service.price && !service.durationMinutes) {
+      setActiveCategory(SERVICE_CATEGORIES.find(c => c.id === service.category));
+      return;
+    }
     if (!service.transition) {
       setActiveService(service);
       setShowTransition(false);
@@ -249,27 +255,24 @@ function MainApp() {
                     <div className="font-monument text-[9px] md:text-[10px] tracking-[0.3em] text-[#e5d3b3] uppercase mb-1">Kategorie</div>
                     <h2 className="font-editorial text-xl md:text-3xl">{t.servicesTitle || 'Služby'}</h2>
                   </div>
-                  {SERVICE_CATEGORIES.map((cat, catIdx) => {
-                    const catServices = SERVICES.filter(s => s.category === cat.id);
-                    if (catServices.length === 0) return null;
-                    return (
-                      <div key={cat.id} className="mb-4">
-                        <div className="font-monument text-[7px] md:text-[8px] tracking-[0.2em] text-[#a3a3a3] uppercase mb-1 text-center">{cat.title}</div>
-                        <div className="flex flex-wrap justify-center gap-x-2 gap-y-0 w-full max-w-5xl mx-auto">
-                          {catServices.map((srv, i) => {
-                            const isOdd = i % 2 === 1;
-                            return (
-                              <div key={srv.id} className="w-[33%] md:w-[25%] flex justify-center" style={{ marginTop: isOdd ? '8px' : '0' }}>
-                                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: catIdx * 0.1 + i * 0.02 }}>
-                                  <MenuButton service={srv} translatedTitle={t.services[srv.id as keyof typeof t.services]?.title} translatedSubtitle={t.services[srv.id as keyof typeof t.services]?.subtitle} onClick={() => handleServiceClick(srv)} enterLabel={t.enterModule} />
-                                </motion.div>
-                              </div>
-                            );
-                          })}
+                  {/* Categories in checkerboard - these are the main clickable items */}
+                  <div className="w-full max-w-5xl mx-auto space-y-1 md:space-y-2">
+                    {SERVICE_CATEGORIES.filter(cat => SERVICES.some(s => s.category === cat.id)).map((cat, i) => {
+                      const isOdd = i % 2 === 1;
+                      const isCenter = i % 3 === 2;
+                      return (
+                        <div key={cat.id} className={`flex ${isCenter ? 'justify-center' : isOdd ? 'justify-end pr-[10%]' : 'justify-start pl-[10%]'}`} style={{ marginTop: isOdd ? '10px' : '0' }}>
+                          <motion.div initial={{ opacity: 0, x: isOdd ? 30 : -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: i * 0.08 }}>
+                            <MenuButton service={{ id: cat.id, title: cat.title, shortTitle: cat.title, subtitle: `${SERVICES.filter(s => s.category === cat.id).length} služeb`, desc: '', benefits: [], process: [], price: '', time: '', durationMinutes: 0, category: cat.id, video: '', transition: '', position: [0,0,0], color: '#e5d3b3' }}
+                              translatedTitle={cat.title}
+                              translatedSubtitle={`${SERVICES.filter(s => s.category === cat.id).length} služeb`}
+                              onClick={() => { setActiveCategory(cat); setStage(STAGES.MENU); }}
+                              enterLabel={t.enterModule} />
+                          </motion.div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
                 <div className="shrink-0 mt-4">
                   <ContactsBar t={t} />
@@ -304,6 +307,46 @@ function MainApp() {
                 </div>
                 <Testimonials testimonials={t.testimonialsList} title={t.testimonialsTitle} />
                 <HelixGallery />
+              </div>
+            </motion.div>
+          )}
+
+          {/* Category Services View */}
+          {activeCategory && stage === STAGES.MENU && !isTransitioning && !showTransition && (
+            <motion.div key="category-services" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }} className="absolute inset-0 pointer-events-auto z-[6] bg-[#0a0a0a]">
+              <div className="w-full h-full overflow-y-auto flex flex-col" style={{ touchAction: 'pan-y' }}>
+                <div className="flex-1 px-4 md:px-8 pt-4 md:pt-[60px] pb-20 overflow-y-auto">
+                  <div className="flex items-center gap-4 mb-4">
+                    <button onClick={() => setActiveCategory(null)} className="font-monument text-[10px] tracking-widest hover:text-[#e5d3b3] transition-colors flex items-center gap-2">
+                      <span className="w-4 h-[1px] bg-white group-hover:bg-[#e5d3b3] transition-colors" />Zpět
+                    </button>
+                    <h2 className="font-editorial text-xl md:text-2xl">{activeCategory.title}</h2>
+                  </div>
+                  <div className="space-y-3">
+                    {SERVICES.filter(s => s.category === activeCategory.id).map((srv, i) => (
+                      <motion.div key={srv.id} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3, delay: i * 0.05 }}
+                        className="glass-panel rounded-xl p-4 cursor-pointer hover:border-[#e5d3b3] transition-all"
+                        onClick={() => handleServiceClick(srv)}>
+                        <div className="flex justify-between items-start">
+                          <div className="flex-1">
+                            <h3 className="font-editorial text-lg md:text-xl mb-1">{srv.title}</h3>
+                            <p className="font-montreal text-xs text-[#a3a3a3] mb-2 line-clamp-2">{srv.desc}</p>
+                            <div className="flex gap-4 text-xs">
+                              <span className="text-[#e5d3b3]">{srv.price}</span>
+                              <span className="text-[#a3a3a3]">{srv.time}</span>
+                            </div>
+                          </div>
+                          <button className="px-4 py-2 bg-[#e5d3b3] text-black font-monument text-[9px] tracking-widest rounded-lg shrink-0 ml-4">
+                            Rezervovat
+                          </button>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+                <div className="shrink-0 mt-4">
+                  <ContactsBar t={t} />
+                </div>
               </div>
             </motion.div>
           )}
