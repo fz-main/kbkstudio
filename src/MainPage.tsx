@@ -244,13 +244,13 @@ function MainApp() {
           {stage === STAGES.MENU && !isTransitioning && !showTransition && (
             <motion.div key="menu" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="absolute inset-0 pointer-events-auto z-[5]">
               <div className="w-full h-full overflow-y-auto flex flex-col" style={{ touchAction: 'pan-y' }}>
-                <div className="flex-1 px-4 md:px-12 pt-4 md:pt-[60px] pb-32 overflow-y-auto">
-                  <div className="text-center mb-6 md:mb-10">
-                    <div className="font-monument text-[10px] md:text-[12px] tracking-[0.3em] text-[#e5d3b3] uppercase mb-2">Kategorie</div>
-                    <h2 className="font-editorial text-2xl md:text-4xl">{t.servicesTitle || 'Služby'}</h2>
+                <div className="flex-1 px-4 md:px-12 pt-2 md:pt-[40px] pb-24 overflow-y-auto">
+                  <div className="text-center mb-2 md:mb-4">
+                    <div className="font-monument text-[9px] md:text-[10px] tracking-[0.3em] text-[#e5d3b3] uppercase mb-1">Kategorie</div>
+                    <h2 className="font-editorial text-xl md:text-3xl">{t.servicesTitle || 'Služby'}</h2>
                   </div>
-                  {/* Checkerboard layout: row1(left+right), row2(center), row3(left+right), etc */}
-                  <div className="w-full max-w-5xl mx-auto space-y-4 md:space-y-6">
+                  {/* Checkerboard layout: all 9 services fit on screen */}
+                  <div className="w-full max-w-5xl mx-auto space-y-1 md:space-y-2">
                     {/* Row 1: Kosmetické ošetření (left, wraps), Phi-Ion (right) */}
                     <div className="flex justify-between items-start">
                       <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.1 }}
