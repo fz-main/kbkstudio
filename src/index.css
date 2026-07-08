@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "PP Editorial New", "Playfair Display", serif;
+  --font-sans: "PP Neue Montreal", "Helvetica Now", "Inter", sans-serif;
+  --font-display: "Monument Extended", "Helvetica Now", sans-serif;
+  
+  --color-primary: #0a0a0a;
+  --color-secondary: #1a1a1a;
+  --color-accent: #e5d3b3;
+  --color-text: #f8f5f2;
+  --color-text-light: #a3a3a3;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-primary);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+  }
+  
+  body {
+    overflow: hidden;
+    overscroll-behavior: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    touch-action: none;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+  }
+}
+
+.font-editorial { font-family: var(--font-serif); }
+.font-montreal { font-family: var(--font-sans); }
+.font-monument { font-family: var(--font-display); text-transform: uppercase; }
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
