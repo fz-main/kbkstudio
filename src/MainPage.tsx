@@ -51,9 +51,7 @@ function MainApp() {
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const closeLightbox = () => setLightboxImage(null);
   const [activeCategory, setActiveCategory] = useState<any>(null);
-  const [heroFading, setHeroFading] = useState(false);
-  const [showHeroVideo, setShowHeroVideo] = useState(false);
-  const [videoBlurred, setVideoBlurred] = useState(false);
+
 
   const showCard = useCallback(() => {
     setShowTransition(false);
@@ -93,9 +91,7 @@ function MainApp() {
       const now = Date.now();
       if (now - lastScrollTime.current < COOLDOWN) return;
       if (stage === STAGES.INTRO && e.deltaY > 0) {
-        setHeroFading(true);
-        setShowHeroVideo(true);
-        setTimeout(() => setStage(STAGES.MENU), 600);
+        setStage(STAGES.MENU);
         lastScrollTime.current = now;
       } else if (stage === STAGES.MENU && e.deltaY < 0) {
         setStage(STAGES.INTRO);
@@ -120,9 +116,7 @@ function MainApp() {
       const deltaY = touchStartY - e.changedTouches[0].clientY;
       if (Math.abs(deltaY) > 50) {
         if (stage === STAGES.INTRO && deltaY > 0) {
-          setHeroFading(true);
-          setShowHeroVideo(true);
-        setTimeout(() => setStage(STAGES.MENU), 500);
+          setStage(STAGES.MENU);
           lastScrollTime.current = now;
         } else if (stage === STAGES.MENU && deltaY < 0) {
           setStage(STAGES.INTRO);
@@ -171,10 +165,6 @@ function MainApp() {
         </div>
       )}
 
-      {showHeroVideo && (
-        <div className="fixed inset-0 z-[1] bg-[#0a0a0a]" style={{ animation: 'fadeOut 0.8s ease-in forwards' }}>
-        </div>
-      )}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <ThreeScene stage={stage} activeService={activeService} isTransitioning={isTransitioning} onServiceClick={handleServiceClick} />
       </div>
@@ -223,7 +213,7 @@ function MainApp() {
         </header>
 
         <AnimatePresence mode="wait">
-          {stage === STAGES.INTRO && !showHeroVideo && (
+          {stage === STAGES.INTRO && (
             <motion.div key="intro" exit={{ opacity: 0, filter: 'blur(10px)' }} transition={{ duration: 0.8, ease: 'easeInOut' }} className="absolute inset-0 flex flex-col items-center justify-center px-4" >
               <div className="overflow-hidden flex flex-wrap justify-center">
                 {'KBK STUDIO'.split('').map((char, i) => (
