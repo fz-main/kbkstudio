@@ -97,8 +97,8 @@ function MainApp() {
           setHeroFading(true);
           setTimeout(() => setVideoTransition(true), 100);
         lastScrollTime.current = now;
-      } else if (stage === STAGES.MENU) {
-        return;
+      } else if (stage === STAGES.MENU && e.deltaY > 0 && !activeCategory) {
+        setStage(STAGES.ABOUT);
       } else if (stage === STAGES.ABOUT && e.deltaY < 0) {
         if (aboutContainer && aboutContainer.scrollTop === 0) {
           setStage(STAGES.MENU);
