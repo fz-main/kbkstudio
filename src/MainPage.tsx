@@ -95,7 +95,7 @@ function MainApp() {
       if (now - lastScrollTime.current < COOLDOWN) return;
         if (stage === STAGES.INTRO && e.deltaY > 0) {
           setHeroFading(true);
-          setTimeout(() => { setVideoTransition(true); setStage(STAGES.MENU); }, 400);
+          setTimeout(() => setVideoTransition(true), 400);
         lastScrollTime.current = now;
       } else if (stage === STAGES.MENU && e.deltaY < 0) {
         setStage(STAGES.INTRO);
@@ -121,7 +121,7 @@ function MainApp() {
       if (Math.abs(deltaY) > 50) {
         if (stage === STAGES.INTRO && deltaY > 0) {
           setHeroFading(true);
-          setTimeout(() => { setVideoTransition(true); setStage(STAGES.MENU); }, 500);
+          setTimeout(() => setVideoTransition(true), 500);
           lastScrollTime.current = now;
         } else if (stage === STAGES.MENU && deltaY < 0) {
           setVideoTransition(false);
@@ -173,8 +173,8 @@ function MainApp() {
       )}
 
       {(videoTransition || videoBlurred || stage === STAGES.MENU || stage === STAGES.SERVICE_DETAIL || stage === STAGES.ABOUT) && (
-        <div className="fixed inset-0 z-0" style={{ filter: videoBlurred ? 'blur(8px)' : 'none', transition: 'filter 0.8s ease-out, opacity 0.8s ease-in', opacity: videoBlurred || stage === STAGES.MENU || stage === STAGES.SERVICE_DETAIL || stage === STAGES.ABOUT ? 0.45 : 0 }}>
-          <video autoPlay muted loop playsInline className="w-full h-full object-cover">
+        <div className="fixed inset-0 z-0" style={{ filter: videoBlurred ? 'blur(8px)' : 'none', transition: 'filter 1s ease-in-out, opacity 1s ease-in', opacity: videoBlurred ? 0.45 : videoTransition ? 1 : 0.45 }}>
+          <video autoPlay muted playsInline onEnded={() => { setTimeout(() => setVideoBlurred(true), 100); setTimeout(() => setStage(STAGES.MENU), 500); }} className="w-full h-full object-cover">
             <source src="https://res.cloudinary.com/dfh97tdty/video/upload/v1783497995/0708_2_crpiub.mp4" type="video/mp4" />
           </video>
         </div>
