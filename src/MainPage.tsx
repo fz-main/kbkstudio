@@ -173,7 +173,7 @@ function MainApp() {
       )}
 
       {(videoTransition || videoBlurred) && (
-        <div className="fixed inset-0 z-[1]" style={{ filter: videoBlurred ? 'blur(8px)' : 'none', transition: 'filter 0.8s ease-out', opacity: videoBlurred ? 0.6 : 1 }}>
+        <div className="fixed inset-0 z-[1]" style={{ filter: videoBlurred ? 'blur(8px)' : 'none', transition: 'filter 0.8s ease-out', opacity: videoBlurred ? 0.45 : 1 }}>
           <video ref={(el) => { if (el && !el.dataset.played) { el.dataset.played = '1'; el.play().catch(() => {}); } }} autoPlay muted playsInline onEnded={(e) => { e.target.pause(); setTimeout(() => setVideoBlurred(true), 300); setTimeout(() => setStage(STAGES.MENU), 500); }} className="w-full h-full object-cover">
             <source src="https://res.cloudinary.com/dfh97tdty/video/upload/v1783497995/0708_2_crpiub.mp4" type="video/mp4" />
           </video>
