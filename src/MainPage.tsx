@@ -94,7 +94,8 @@ function MainApp() {
       const now = Date.now();
       if (now - lastScrollTime.current < COOLDOWN) return;
       if (stage === STAGES.INTRO && e.deltaY > 0) {
-        setVideoTransition(true);
+        setHeroFading(true);
+        setTimeout(() => setVideoTransition(true), 500);
         lastScrollTime.current = now;
       } else if (stage === STAGES.MENU && e.deltaY < 0) {
         setStage(STAGES.INTRO);
@@ -119,7 +120,8 @@ function MainApp() {
       const deltaY = touchStartY - e.changedTouches[0].clientY;
       if (Math.abs(deltaY) > 50) {
         if (stage === STAGES.INTRO && deltaY > 0) {
-          setVideoTransition(true);
+          setHeroFading(true);
+          setTimeout(() => setVideoTransition(true), 500);
           lastScrollTime.current = now;
         } else if (stage === STAGES.MENU && deltaY < 0) {
           setVideoTransition(false);
@@ -219,8 +221,8 @@ function MainApp() {
         </header>
 
         <AnimatePresence mode="wait">
-          {stage === STAGES.INTRO && !videoTransition && (
-            <motion.div key="intro" exit={{ opacity: 0, filter: 'blur(10px)' }} transition={{ duration: 0.5, ease: 'easeInOut' }} className="absolute inset-0 flex flex-col items-center justify-center px-4">
+          {stage === STAGES.INTRO && (
+            <motion.div key="intro" className="absolute inset-0 flex flex-col items-center justify-center px-4" style={{ opacity: heroFading ? 0 : 1, transition: 'opacity 0.5s ease-out' }}>
               <div className="overflow-hidden flex flex-wrap justify-center">
                 {'KBK STUDIO'.split('').map((char, i) => (
                   <motion.span key={i} custom={i} variants={letterVariants} initial="hidden" animate="visible"
