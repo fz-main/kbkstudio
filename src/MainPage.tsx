@@ -51,6 +51,7 @@ function MainApp() {
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const closeLightbox = () => setLightboxImage(null);
   const [activeCategory, setActiveCategory] = useState<any>(null);
+  const [videoTransition, setVideoTransition] = useState(false);
 
 
   const showCard = useCallback(() => {
@@ -229,7 +230,7 @@ function MainApp() {
                   <motion.div animate={{ y: ['-100%', '100%'] }} transition={{ repeat: Infinity, duration: 1.5, ease: 'linear' }} className="absolute inset-0 bg-white" />
                 </div>
                 <motion.button initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5, duration: 1 }}
-                  onClick={() => setStage(STAGES.MENU)}
+                  onClick={() => setVideoTransition(true)}
                   className="mt-6 px-6 py-3 border border-white/30 rounded-full font-montreal text-[10px] md:text-xs uppercase tracking-widest text-white/80 hover:bg-white/10 hover:border-white/50 transition-all pointer-events-auto">
                   {t.scrollToServices || 'Služby ↓'}
                 </motion.button>
