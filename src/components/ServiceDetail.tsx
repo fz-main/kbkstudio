@@ -36,7 +36,7 @@ export default function ServiceDetail({ activeService, onBack, lang: _lang, t }:
         {t.back}
       </button>
 
-      <div className="min-h-full px-4 md:px-16 pt-24 pb-16 flex flex-col gap-8 max-w-7xl mx-auto">
+      <div className="min-h-full px-4 md:px-16 pt-16 pb-16 flex flex-col gap-6 max-w-5xl mx-auto">
 
         {/* SERVICE CARD */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-start">
