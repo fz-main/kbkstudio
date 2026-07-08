@@ -248,7 +248,7 @@ function MainApp() {
           )}
 
           {stage === STAGES.MENU && !isTransitioning && !showTransition && (
-            <motion.div key="menu" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="absolute inset-0 pointer-events-auto z-[5]">
+            <motion.div key="menu" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8 }} className="absolute inset-0 pointer-events-auto z-[5]" style={{ opacity: videoBlurred ? 1 : 0, transition: "opacity 0.8s ease-in 0.3s" }}>
               <div className="w-full h-full flex flex-col" style={{ touchAction: 'pan-y' }}>
                 <div className="flex-1 px-4 md:px-8 pt-[100px] md:pt-[130px] pb-20 overflow-hidden">
                   <div className="text-center mb-4 md:mb-7">
@@ -279,7 +279,7 @@ function MainApp() {
           {stage === STAGES.ABOUT && (
             <motion.div key="about" initial={{ opacity: 0, y: 60 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 60 }} transition={{ duration: 1, ease: 'easeOut' }}
               className="absolute inset-0 pointer-events-auto overflow-y-auto flex flex-col px-6 py-20">
-              <button onClick={() => setStage(STAGES.MENU)}
+              <button onClick={() => { setHeroFading(true); setShowHeroVideo(true); setTimeout(() => setStage(STAGES.MENU), 600); }}
                 className="fixed top-16 md:top-20 left-4 md:left-8 font-monument text-[10px] md:text-xs tracking-widest hover:text-[#e5d3b3] transition-colors z-50 flex items-center gap-3 group bg-black/60 px-3 py-2 rounded-full backdrop-blur-sm">
                 <span className="w-4 h-[1px] bg-white group-hover:bg-[#e5d3b3] transition-colors" />{t.back}
               </button>
