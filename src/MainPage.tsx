@@ -258,7 +258,7 @@ function MainApp() {
                         <MenuButton service={SERVICES[0]} translatedTitle={t.services[0]?.title || t.services['kosmeticke-ocetreni']?.title} translatedSubtitle={t.services[0]?.subtitle || t.services['kosmeticke-ocetreni']?.subtitle} onClick={() => handleServiceClick(SERVICES[0])} enterLabel={t.enterModule} />
                       </motion.div>
                       <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.2 }}
-                        className="w-[45%] text-right" style={{ marginTop: '0px' }}>
+                        className="w-[50%] flex justify-end" style={{ marginTop: '0px' }}>
                         <MenuButton service={SERVICES[1]} translatedTitle={t.services[1]?.title || t.services['phi-ion-microneedling']?.title} translatedSubtitle={t.services[1]?.subtitle || t.services['phi-ion-microneedling']?.subtitle} onClick={() => handleServiceClick(SERVICES[1])} enterLabel={t.enterModule} />
                       </motion.div>
                     </div>
@@ -276,7 +276,7 @@ function MainApp() {
                         <MenuButton service={SERVICES[3]} translatedTitle={t.services[3]?.title || t.services['chemicky-peeling']?.title} translatedSubtitle={t.services[3]?.subtitle || t.services['chemicky-peeling']?.subtitle} onClick={() => handleServiceClick(SERVICES[3])} enterLabel={t.enterModule} />
                       </motion.div>
                       <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.5 }}
-                        className="w-[45%] text-right" style={{ marginTop: '0px' }}>
+                        className="w-[50%] flex justify-end" style={{ marginTop: '0px' }}>
                         <MenuButton service={SERVICES[4]} translatedTitle={t.services[4]?.title || t.services['carbon-peel']?.title} translatedSubtitle={t.services[4]?.subtitle || t.services['carbon-peel']?.subtitle} onClick={() => handleServiceClick(SERVICES[4])} enterLabel={t.enterModule} />
                       </motion.div>
                     </div>
@@ -294,7 +294,7 @@ function MainApp() {
                         <MenuButton service={SERVICES[6]} translatedTitle={t.services[6]?.title || t.services['permanentni-make-up']?.title} translatedSubtitle={t.services[6]?.subtitle || t.services['permanentni-make-up']?.subtitle} onClick={() => handleServiceClick(SERVICES[6])} enterLabel={t.enterModule} />
                       </motion.div>
                       <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.8 }}
-                        className="w-[45%] text-right" style={{ marginTop: '0px' }}>
+                        className="w-[50%] flex justify-end" style={{ marginTop: '0px' }}>
                         <MenuButton service={SERVICES[7]} translatedTitle={t.services[7]?.title || t.services['lash-lifting']?.title} translatedSubtitle={t.services[7]?.subtitle || t.services['lash-lifting']?.subtitle} onClick={() => handleServiceClick(SERVICES[7])} enterLabel={t.enterModule} />
                       </motion.div>
                     </div>
