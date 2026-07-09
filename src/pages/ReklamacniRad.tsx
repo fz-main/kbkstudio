@@ -51,9 +51,11 @@ export default function ReklamacniRad() {
               <p>Pro případné dotazy nebo reklamace kontaktujte:</p>
               <div className="mt-2 space-y-1">
                 <p>Beata Kučerová – KBK Studio</p>
-                <p><a href="tel:+420777123456" className="text-[#e5d3b3] hover:underline">+420 777 123 456</a></p>
+                <p>IČ: 06826067</p>
+                <p>Sídlo firmy: Horky 109, 675 73, Kralice nad Oslavou</p>
+                <p>Otevírací doba: dle objednávek a přání</p>
+                <p className="mt-2"><a href="tel:+420777123456" className="text-[#e5d3b3] hover:underline">+420 777 123 456</a></p>
                 <p><a href="mailto:info@kbkstudio.cz" className="text-[#e5d3b3] hover:underline">info@kbkstudio.cz</a></p>
-                <p>Masarykova 12, Brno</p>
               </div>
             </section>
           </div>
