@@ -265,7 +265,7 @@ function MainApp() {
                     <h2 className="font-editorial text-2xl md:text-4xl">{t.servicesTitle || 'Služby'}</h2>
                   </div>
                   {/* 9 categories: 3 rows x 3 cols */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-y-6 sm:gap-y-10 md:gap-y-14 w-full max-w-4xl mx-auto">
+                  <div className="flex flex-col md:grid md:grid-cols-3 gap-y-6 md:gap-y-10 md:gap-x-8 w-full max-w-4xl mx-auto">
                     {SERVICE_CATEGORIES.filter(cat => SERVICES.some(s => s.category === cat.id)).map((cat, i) => (
                       <motion.div key={cat.id} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: i * 0.06 }}
                         className="flex justify-center">
