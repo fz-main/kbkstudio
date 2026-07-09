@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { translations } from '../../lib/i18n';
 import type { Lang } from '../../lib/i18n';
 
-const ADMIN_PASSWORD = 'admin123';
+const ADMIN_PASSWORD = 'KBK#9xLm!2vQw7Rp';
 
 export const AdminLogin: React.FC = () => {
   const [lang] = useState<Lang>('cs');

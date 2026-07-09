@@ -408,7 +408,7 @@ function MainApp() {
                     <button onClick={() => setActiveCategory(null)} className="font-monument text-[10px] tracking-widest hover:text-[#e5d3b3] transition-colors flex items-center gap-2">
                       <span className="w-4 h-[1px] bg-white group-hover:bg-[#e5d3b3] transition-colors" />{t.back}
                     </button>
-                    <h2 className="font-editorial text-xl md:text-2xl hidden md:block">{t.categories?.[activeCategory.id as keyof typeof t.categories] || activeCategory.title}</h2>
+                    <h2 className="font-editorial text-xl md:text-2xl hidden lg:block">{t.categories?.[activeCategory.id as keyof typeof t.categories] || activeCategory.title}</h2>
                   </div>
                   <div className="space-y-3">
                     {SERVICES.filter(s => s.category === activeCategory.id).map((srv, i) => (
