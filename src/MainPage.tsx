@@ -280,46 +280,32 @@ function MainApp() {
                 <span className="w-4 h-[1px] bg-white group-hover:bg-[#e5d3b3] transition-colors" />{t.back}
               </button>
               <div id="about-scroll-container" className="max-w-5xl w-full mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
-                  <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.2, delay: 0.2, ease: 'easeOut' }}
-                    className="flex flex-col gap-4 cursor-pointer">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="flex flex-col items-center gap-2" onClick={() => setLightboxImage(t.aboutPhotoBeata)}>
-                        <img src={t.aboutPhotoBeata} alt="Beata Kučerová" className="w-full aspect-square object-cover rounded-2xl shadow-lg" />
-                        <div className="text-center">
-                          <div className="font-editorial text-sm md:text-base">Beata Kučerová</div>
-                          <div className="font-montreal text-[10px] text-[#a3a3a3]">PMU · World Champion</div>
-                        </div>
-                      </div>
-                      <div className="flex flex-col items-center gap-2" onClick={() => setLightboxImage(t.aboutPhotoStepanka)}>
-                        <img src={t.aboutPhotoStepanka} alt="Štěpánka Kavínová" className="w-full aspect-square object-cover rounded-2xl shadow-lg" />
-                        <div className="text-center">
-                          <div className="font-editorial text-sm md:text-base">Štěpánka Kavínová</div>
-                          <div className="font-montreal text-[10px] text-[#a3a3a3]">Kosmetička</div>
-                        </div>
-                      </div>
+                <div className="font-monument text-[9px] tracking-[0.3em] text-[#e5d3b3] mb-2 uppercase text-center">{t.aboutLabel}</div>
+                <h2 className="font-editorial text-3xl md:text-5xl mb-1 leading-tight text-center">{t.ownerName}</h2>
+                <div className="font-montreal text-xs text-[#a3a3a3] tracking-widest mb-6 text-center">{t.aboutFounder}</div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                  <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
+                    className="flex gap-4 items-start cursor-pointer" onClick={() => setLightboxImage(t.aboutPhotoBeata)}>
+                    <img src={t.aboutPhotoBeata} alt="Beata Kučerová" className="w-24 h-32 md:w-28 md:h-36 object-cover rounded-xl shadow-lg flex-shrink-0" />
+                    <div className="flex flex-col gap-1 pt-1 min-w-0">
+                      <div className="font-editorial text-sm md:text-base text-white">Beata Kučerová</div>
+                      <div className="font-montreal text-[9px] md:text-[10px] text-[#e5d3b3]">Zakladatelka · PMU · World Champion</div>
+                      <p className="font-montreal text-[10px] md:text-[11px] text-[#a3a3a3] leading-relaxed">{t.aboutBioBeata}</p>
                     </div>
                   </motion.div>
-                  <motion.div initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.2, delay: 0.4, ease: 'easeOut' }}>
-                    <div className="font-monument text-[9px] tracking-[0.3em] text-[#e5d3b3] mb-4 uppercase">{t.aboutLabel}</div>
-                    <h2 className="font-editorial text-4xl md:text-5xl mb-2 leading-tight">{t.ownerName}</h2>
-                    <div className="font-montreal text-xs text-[#a3a3a3] tracking-widest mb-6">{t.aboutFounder}</div>
-                    <div className="border-t border-white/10 pt-6 flex flex-col gap-4">
-                      <div className="space-y-3">
-                        <div>
-                          <div className="font-editorial text-sm text-white mb-1">Beata</div>
-                          <p className="font-montreal text-xs text-[#a3a3a3] leading-relaxed">{t.aboutBioBeata}</p>
-                        </div>
-                        <div className="border-t border-white/10" />
-                        <div>
-                          <div className="font-editorial text-sm text-white mb-1">Štěpánka</div>
-                          <p className="font-montreal text-xs text-[#a3a3a3] leading-relaxed">{t.aboutBioStepanka}</p>
-                        </div>
-                      </div>
-                      <p className="font-montreal text-sm leading-relaxed" style={{ color: '#e5d3b3' }}>{t.aboutMotto}</p>
-                      <div className="font-monument text-[9px] tracking-widest text-[#a3a3a3] mt-2">{t.aboutServices}</div>
+                  <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.3 }}
+                    className="flex gap-4 items-start cursor-pointer" onClick={() => setLightboxImage(t.aboutPhotoStepanka)}>
+                    <img src={t.aboutPhotoStepanka} alt="Štěpánka Kavínová" className="w-24 h-32 md:w-28 md:h-36 object-cover rounded-xl shadow-lg flex-shrink-0" />
+                    <div className="flex flex-col gap-1 pt-1 min-w-0">
+                      <div className="font-editorial text-sm md:text-base text-white">Štěpánka Kavínová</div>
+                      <div className="font-montreal text-[9px] md:text-[10px] text-[#e5d3b3]">Kosmetička · Přístrojová ošetření</div>
+                      <p className="font-montreal text-[10px] md:text-[11px] text-[#a3a3a3] leading-relaxed">{t.aboutBioStepanka}</p>
                     </div>
                   </motion.div>
+                </div>
+                <div className="text-center mt-5">
+                  <p className="font-montreal text-sm leading-relaxed" style={{ color: '#e5d3b3' }}>{t.aboutMotto}</p>
+                  <div className="font-monument text-[9px] tracking-widest text-[#a3a3a3] mt-2">{t.aboutServices}</div>
                 </div>
                 <Testimonials testimonials={t.testimonialsList} title={t.testimonialsTitle} />
 

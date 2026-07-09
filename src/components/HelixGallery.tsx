@@ -2,13 +2,14 @@ import { useState, useRef } from 'react';
 import type { Translations } from '../lib/i18n';
 
 const galleryItems = [
-  { id: 1, src: 'https://static.wixstatic.com/media/6e5a68_58ff6be540194d249d9df44ad99c2e83~mv2.jpg/v1/fill/w_858,h_566,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/DSC01966_JPG.jpg', alt: 'Interior 1' },
-  { id: 2, src: 'https://res.cloudinary.com/dfh97tdty/image/upload/v1781347513/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA_%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0_2026-06-13_134240_irljmw.png', alt: 'Work 1' },
-  { id: 3, src: 'https://res.cloudinary.com/dfh97tdty/image/upload/v1781347513/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA_%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0_2026-06-13_133957_fz8rga.png', alt: 'Work 2' },
-  { id: 4, src: 'https://res.cloudinary.com/dfh97tdty/image/upload/v1781347513/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA_%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0_2026-06-13_134309_mm1ct8.png', alt: 'Work 3' },
-  { id: 5, src: 'https://res.cloudinary.com/dfh97tdty/image/upload/v1781347513/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA_%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0_2026-06-13_134328_mndg3p.png', alt: 'Work 4' },
-  { id: 6, src: 'https://res.cloudinary.com/dfh97tdty/image/upload/v1781347513/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA_%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0_2026-06-13_134224_efesrr.png', alt: 'Work 5' },
-  { id: 7, src: 'https://res.cloudinary.com/dfh97tdty/image/upload/v1781347513/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA_%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0_2026-06-13_134202_lbbgme.png', alt: 'Work 6' },
+  { id: 1, src: 'https://www.kbkstudio.cz/wp-content/uploads/2023/03/01_salon_A-scaled.jpg', alt: 'Studio KBK' },
+  { id: 2, src: 'https://www.kbkstudio.cz/wp-content/uploads/2023/03/01_salon_C-2048x1366.jpg', alt: 'Studio interiér' },
+  { id: 3, src: 'https://www.kbkstudio.cz/wp-content/uploads/2022/08/makeup.jpg', alt: 'Permanentní make-up' },
+  { id: 4, src: 'https://www.kbkstudio.cz/wp-content/uploads/2023/10/PMU-rty--1149x1536.jpeg', alt: 'PMU rty' },
+  { id: 5, src: 'https://www.kbkstudio.cz/wp-content/uploads/2023/10/Lash-lifting-Laminace-1-2048x1813.jpeg', alt: 'Lash lifting' },
+  { id: 6, src: 'https://www.kbkstudio.cz/wp-content/uploads/2022/02/radiofrkvence.jpeg', alt: 'Radiofrekvence' },
+  { id: 7, src: 'https://www.kbkstudio.cz/wp-content/uploads/2023/10/Larens-Profesional.jpeg', alt: 'Larens Professional' },
+  { id: 8, src: 'https://www.kbkstudio.cz/wp-content/uploads/2025/05/462849486_18275678536246136_6638648624377151157_n.jpg', alt: 'KBK Studio tým' },
 ];
 
 interface HelixGalleryProps {
