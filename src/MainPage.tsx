@@ -418,8 +418,8 @@ function MainApp() {
                       <motion.div key={srv.id} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3, delay: i * 0.05 }}
                         className="glass-panel rounded-xl p-4 cursor-pointer hover:border-[#e5d3b3] transition-all"
                         onClick={() => handleServiceClick(srv)}>
-                        <div className="flex justify-between items-start">
-                          <div className="flex-1">
+                        <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-3">
+                          <div className="flex-1 min-w-0">
                             <h3 className="font-editorial text-lg md:text-xl mb-1">{srv.title}</h3>
                             <p className="font-montreal text-xs text-[#a3a3a3] mb-2 line-clamp-2">{srv.desc}</p>
                             <div className="flex gap-4 text-xs">
@@ -427,7 +427,7 @@ function MainApp() {
                               <span className="text-[#a3a3a3]">{srv.time}</span>
                             </div>
                           </div>
-                          <button className="px-4 py-2 border border-[#e5d3b3] text-[#e5d3b3] font-monument text-[9px] tracking-widest rounded-lg shrink-0 ml-4 hover:bg-[#e5d3b3] hover:text-black transition-colors">
+                          <button className="px-4 py-2 border border-[#e5d3b3] text-[#e5d3b3] font-monument text-[9px] tracking-widest rounded-lg shrink-0 md:ml-4 hover:bg-[#e5d3b3] hover:text-black transition-colors w-full md:w-auto text-center">
                             {t.moreInfo}
                           </button>
                         </div>
