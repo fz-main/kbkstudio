@@ -409,9 +409,6 @@ function MainApp() {
                       <span className="w-4 h-[1px] bg-white group-hover:bg-[#e5d3b3] transition-colors" />{t.back}
                     </button>
                     <h2 className="font-editorial text-xl md:text-2xl hidden md:block">{t.categories?.[activeCategory.id as keyof typeof t.categories] || activeCategory.title}</h2>
-                    <div className="flex-1" />
-                    <button onClick={() => { setActiveCategory(null); setStage(STAGES.ABOUT); }}
-                      className="font-monument text-[9px] md:text-[10px] tracking-widest text-white/50 hover:text-[#e5d3b3] transition-colors">{t.aboutLabel}</button>
                   </div>
                   <div className="space-y-3">
                     {SERVICES.filter(s => s.category === activeCategory.id).map((srv, i) => (
