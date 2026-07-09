@@ -44,8 +44,8 @@ export default function ServiceDetail({ activeService, onBack, lang: _lang, t }:
 
         {isSkoleni && (
           <div className="text-center">
-            <div className="font-monument text-[10px] md:text-xs tracking-[0.3em] text-[#e5d3b3] mb-2 uppercase">Školení</div>
-            <div className="font-montreal text-xs text-[#a3a3a3]">Profesionální vzdělávání v oboru permanentní make-up a kosmetické procedury</div>
+            <div className="font-monument text-[10px] md:text-xs tracking-[0.3em] text-[#e5d3b3] mb-2 uppercase">{t.skoleniLabel}</div>
+            <div className="font-montreal text-xs text-[#a3a3a3]">{t.skoleniSubtitle}</div>
           </div>
         )}
 
@@ -68,7 +68,7 @@ export default function ServiceDetail({ activeService, onBack, lang: _lang, t }:
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 mb-6 md:mb-8">
               {activeService.benefits && activeService.benefits.length > 0 && (
                 <div>
-                  <div className="font-monument text-xs tracking-[0.2em] text-[#e5d3b3] mb-3">Výhody</div>
+                  <div className="font-monument text-xs tracking-[0.2em] text-[#e5d3b3] mb-3">{t.benefits}</div>
                   <ul className="flex flex-col gap-3">
                     {activeService.benefits.map((b, i) => (
                       <li key={i} className="font-montreal text-sm md:text-base text-[#a3a3a3] flex items-start gap-3">
@@ -81,7 +81,7 @@ export default function ServiceDetail({ activeService, onBack, lang: _lang, t }:
               )}
               {activeService.process && activeService.process.length > 0 && (
                 <div>
-                  <div className="font-monument text-xs tracking-[0.2em] text-[#e5d3b3] mb-3">Průběh ošetření</div>
+                  <div className="font-monument text-xs tracking-[0.2em] text-[#e5d3b3] mb-3">{t.processLabel}</div>
                   <ol className="flex flex-col gap-3">
                     {activeService.process.map((p, i) => (
                       <li key={i} className="font-montreal text-sm md:text-base text-[#a3a3a3] flex items-start gap-3">
@@ -97,7 +97,7 @@ export default function ServiceDetail({ activeService, onBack, lang: _lang, t }:
             <div className="flex flex-wrap items-center gap-4 md:gap-6 border-t border-white/10 pt-5">
               {isSkoleni ? (
                 <div>
-                  <div className="font-montreal text-sm text-[#e5d3b3]">Cena a termín dle individuální domluvy</div>
+                  <div className="font-montreal text-sm text-[#e5d3b3]">{t.priceByAgreement}</div>
                 </div>
               ) : (
                 <>
@@ -174,7 +174,7 @@ export default function ServiceDetail({ activeService, onBack, lang: _lang, t }:
               onClick={() => { setShowApplication(true); setAppSubmitted(false); setAppForm({ name: '', email: '', message: '' }); }}
               className="w-full px-6 py-4 bg-white text-black font-monument text-[10px] tracking-widest rounded-full hover:bg-[#e5d3b3] transition-colors uppercase"
             >
-              Podat anketu
+              {t.submitApplication}
             </button>
           ) : (
             <button
@@ -194,6 +194,7 @@ export default function ServiceDetail({ activeService, onBack, lang: _lang, t }:
         serviceName={srvT?.title || activeService.title}
         durationMinutes={activeService.durationMinutes || 60}
         master={selectedMaster || undefined}
+        t={t}
       />
 
       {/* Application Popup for Školení */}
@@ -201,13 +202,13 @@ export default function ServiceDetail({ activeService, onBack, lang: _lang, t }:
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm px-4" onClick={() => setShowApplication(false)}>
           <div className="bg-[#1a1a1a] border border-white/10 rounded-2xl p-6 md:p-8 w-full max-w-md relative shadow-2xl" onClick={e => e.stopPropagation()}>
             <button onClick={() => setShowApplication(false)} className="absolute top-3 right-4 text-white/50 hover:text-white text-xl">&times;</button>
-            <div className="font-monument text-[9px] tracking-[0.3em] text-[#e5d3b3] mb-2 uppercase text-center">ŠKOLENÍ</div>
+            <div className="font-monument text-[9px] tracking-[0.3em] text-[#e5d3b3] mb-2 uppercase text-center">{t.skoleniLabel}</div>
             <h3 className="font-editorial text-xl md:text-2xl mb-5 text-center">{srvT?.title || activeService.title}</h3>
             {appSubmitted ? (
               <div className="text-center py-8">
                 <div className="text-3xl mb-3">✓</div>
-                <p className="font-montreal text-sm text-white/70">Vaše anketa byla odeslána. Budeme vás kontaktovat.</p>
-                <button onClick={() => setShowApplication(false)} className="mt-6 px-6 py-2 bg-white/10 rounded-full font-monument text-[10px] tracking-widest hover:bg-white/20 transition-colors">Zavřít</button>
+                <p className="font-montreal text-sm text-white/70">{t.applicationSubmitted}</p>
+                <button onClick={() => setShowApplication(false)} className="mt-6 px-6 py-2 bg-white/10 rounded-full font-monument text-[10px] tracking-widest hover:bg-white/20 transition-colors">{t.close}</button>
               </div>
             ) : (
               <form onSubmit={e => {
@@ -219,21 +220,21 @@ export default function ServiceDetail({ activeService, onBack, lang: _lang, t }:
                 setAppSubmitted(true);
               }} className="flex flex-col gap-4">
                 <div>
-                  <label className="font-montreal text-xs text-[#e5d3b3] block mb-1">Vaše jméno</label>
+                  <label className="font-montreal text-xs text-[#e5d3b3] block mb-1">{t.yourName}</label>
                   <input required value={appForm.name} onChange={e => setAppForm({...appForm, name: e.target.value})}
-                    className="w-full bg-black/40 border border-[#e5d3b3]/30 rounded-lg px-4 py-3 font-montreal text-sm text-white placeholder-white/30 focus:border-[#e5d3b3] outline-none" placeholder="Vaše jméno" />
+                    className="w-full bg-black/40 border border-[#e5d3b3]/30 rounded-lg px-4 py-3 font-montreal text-sm text-white placeholder-white/30 focus:border-[#e5d3b3] outline-none" placeholder={t.yourName} />
                 </div>
                 <div>
-                  <label className="font-montreal text-xs text-[#e5d3b3] block mb-1">Váš e-mail</label>
+                  <label className="font-montreal text-xs text-[#e5d3b3] block mb-1">{t.yourEmail}</label>
                   <input required type="email" value={appForm.email} onChange={e => setAppForm({...appForm, email: e.target.value})}
-                    className="w-full bg-black/40 border border-[#e5d3b3]/30 rounded-lg px-4 py-3 font-montreal text-sm text-white placeholder-white/30 focus:border-[#e5d3b3] outline-none" placeholder="Váš e-mail" />
+                    className="w-full bg-black/40 border border-[#e5d3b3]/30 rounded-lg px-4 py-3 font-montreal text-sm text-white placeholder-white/30 focus:border-[#e5d3b3] outline-none" placeholder={t.yourEmail} />
                 </div>
                 <div>
-                  <label className="font-montreal text-xs text-[#e5d3b3] block mb-1">Vaše zpráva (volitelný)</label>
+                  <label className="font-montreal text-xs text-[#e5d3b3] block mb-1">{t.yourMessageOptional}</label>
                   <textarea value={appForm.message} onChange={e => setAppForm({...appForm, message: e.target.value})}
-                    className="w-full bg-black/40 border border-[#e5d3b3]/30 rounded-lg px-4 py-3 font-montreal text-sm text-white placeholder-white/30 focus:border-[#e5d3b3] outline-none h-28 resize-none" placeholder="Vaše zpráva (volitelný)" />
+                    className="w-full bg-black/40 border border-[#e5d3b3]/30 rounded-lg px-4 py-3 font-montreal text-sm text-white placeholder-white/30 focus:border-[#e5d3b3] outline-none h-28 resize-none" placeholder={t.yourMessageOptional} />
                 </div>
-                <button type="submit" className="w-full py-3 bg-[#e5d3b3] text-black font-monument text-[10px] tracking-[0.2em] rounded-lg hover:bg-white transition-colors">Odeslat anketu</button>
+                <button type="submit" className="w-full py-3 bg-[#e5d3b3] text-black font-monument text-[10px] tracking-[0.2em] rounded-lg hover:bg-white transition-colors">{t.submitApplicationBtn}</button>
               </form>
             )}
           </div>

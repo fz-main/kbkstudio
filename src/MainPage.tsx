@@ -259,7 +259,7 @@ function MainApp() {
               <div className="w-full h-full flex flex-col" style={{ touchAction: 'pan-y' }}>
                 <div className="flex-1 px-4 md:px-8 pt-[100px] md:pt-[130px] pb-20 overflow-hidden">
                   <div className="text-center mb-4 md:mb-7">
-                    <div className="font-monument text-[10px] md:text-[11px] tracking-[0.3em] text-[#e5d3b3] uppercase mb-2">Kategorie</div>
+                    <div className="font-monument text-[10px] md:text-[11px] tracking-[0.3em] text-[#e5d3b3] uppercase mb-2">{t.categoryLabel}</div>
                     <h2 className="font-editorial text-2xl md:text-4xl">{t.servicesTitle || 'Služby'}</h2>
                   </div>
                   {/* 9 categories: 3 rows x 3 cols */}
@@ -267,9 +267,9 @@ function MainApp() {
                     {SERVICE_CATEGORIES.filter(cat => SERVICES.some(s => s.category === cat.id)).map((cat, i) => (
                       <motion.div key={cat.id} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: i * 0.06 }}
                         className="flex justify-center">
-                        <MenuButton service={{ id: cat.id, title: cat.title, shortTitle: cat.title, subtitle: `${SERVICES.filter(s => s.category === cat.id).length} služeb`, desc: '', benefits: [], process: [], price: '', time: '', durationMinutes: 0, category: cat.id, video: '', transition: '', position: [0,0,0], color: '#e5d3b3' }}
-                          translatedTitle={cat.title}
-                          translatedSubtitle={`${SERVICES.filter(s => s.category === cat.id).length} služeb`}
+                        <MenuButton service={{ id: cat.id, title: cat.title, shortTitle: cat.title, subtitle: `${SERVICES.filter(s => s.category === cat.id).length} ${t.servicesCountLabel}`, desc: '', benefits: [], process: [], price: '', time: '', durationMinutes: 0, category: cat.id, video: '', transition: '', position: [0,0,0], color: '#e5d3b3' }}
+                          translatedTitle={t.categories?.[cat.id as keyof typeof t.categories] || cat.title}
+                          translatedSubtitle={`${SERVICES.filter(s => s.category === cat.id).length} ${t.servicesCountLabel}`}
                           onClick={() => {
                             const catServices = SERVICES.filter(s => s.category === cat.id);
                             if (catServices.length === 1) {
@@ -352,8 +352,8 @@ function MainApp() {
                       {giftSubmitted ? (
                         <div className="text-center py-8">
                           <div className="text-3xl mb-3">✓</div>
-                          <p className="font-montreal text-sm text-white/70">Vaše objednávka byla odeslána. Budeme vás kontaktovat.</p>
-                          <button onClick={() => setShowGiftPopup(false)} className="mt-6 px-6 py-2 bg-white/10 rounded-full font-monument text-[10px] tracking-widest hover:bg-white/20 transition-colors">Zavřít</button>
+                          <p className="font-montreal text-sm text-white/70">{t.applicationSubmitted}</p>
+                          <button onClick={() => setShowGiftPopup(false)} className="mt-6 px-6 py-2 bg-white/10 rounded-full font-monument text-[10px] tracking-widest hover:bg-white/20 transition-colors">{t.close}</button>
                         </div>
                       ) : (
                         <form onSubmit={e => {
@@ -365,21 +365,21 @@ function MainApp() {
                           setGiftSubmitted(true);
                         }} className="flex flex-col gap-4">
                           <div>
-                            <label className="font-montreal text-xs text-[#e5d3b3] block mb-1">{t.yourName || 'Vaše jméno'}</label>
+                            <label className="font-montreal text-xs text-[#e5d3b3] block mb-1">{t.yourName}</label>
                             <input required value={giftForm.name} onChange={e => setGiftForm({...giftForm, name: e.target.value})}
-                              className="w-full bg-black/40 border border-[#e5d3b3]/30 rounded-lg px-4 py-3 font-montreal text-sm text-white placeholder-white/30 focus:border-[#e5d3b3] outline-none" placeholder={t.yourName || 'Vaše jméno'} />
+                              className="w-full bg-black/40 border border-[#e5d3b3]/30 rounded-lg px-4 py-3 font-montreal text-sm text-white placeholder-white/30 focus:border-[#e5d3b3] outline-none" placeholder={t.yourName} />
                           </div>
                           <div>
-                            <label className="font-montreal text-xs text-[#e5d3b3] block mb-1">{t.yourEmail || 'Váš e-mail'}</label>
+                            <label className="font-montreal text-xs text-[#e5d3b3] block mb-1">{t.yourEmail}</label>
                             <input required type="email" value={giftForm.email} onChange={e => setGiftForm({...giftForm, email: e.target.value})}
-                              className="w-full bg-black/40 border border-[#e5d3b3]/30 rounded-lg px-4 py-3 font-montreal text-sm text-white placeholder-white/30 focus:border-[#e5d3b3] outline-none" placeholder={t.yourEmail || 'Váš e-mail'} />
+                              className="w-full bg-black/40 border border-[#e5d3b3]/30 rounded-lg px-4 py-3 font-montreal text-sm text-white placeholder-white/30 focus:border-[#e5d3b3] outline-none" placeholder={t.yourEmail} />
                           </div>
                           <div>
-                            <label className="font-montreal text-xs text-[#e5d3b3] block mb-1">{t.yourMessage || 'Vaše zpráva (volitelný)'}</label>
+                            <label className="font-montreal text-xs text-[#e5d3b3] block mb-1">{t.yourMessageOptional}</label>
                             <textarea value={giftForm.message} onChange={e => setGiftForm({...giftForm, message: e.target.value})}
-                              className="w-full bg-black/40 border border-[#e5d3b3]/30 rounded-lg px-4 py-3 font-montreal text-sm text-white placeholder-white/30 focus:border-[#e5d3b3] outline-none h-28 resize-none" placeholder={t.yourMessage || 'Vaše zpráva (volitelný)'} />
+                              className="w-full bg-black/40 border border-[#e5d3b3]/30 rounded-lg px-4 py-3 font-montreal text-sm text-white placeholder-white/30 focus:border-[#e5d3b3] outline-none h-28 resize-none" placeholder={t.yourMessageOptional} />
                           </div>
-                          <button type="submit" className="w-full py-3 bg-[#e5d3b3] text-black font-monument text-[10px] tracking-[0.2em] rounded-lg hover:bg-white transition-colors">Odeslat</button>
+                          <button type="submit" className="w-full py-3 bg-[#e5d3b3] text-black font-monument text-[10px] tracking-[0.2em] rounded-lg hover:bg-white transition-colors">{t.submitLabel}</button>
                         </form>
                       )}
                     </div>
@@ -402,9 +402,9 @@ function MainApp() {
                 <div className="flex-1 px-4 md:px-8 pt-4 md:pt-[60px] pb-20 overflow-y-auto">
                   <div className="flex items-center gap-4 mb-4">
                     <button onClick={() => setActiveCategory(null)} className="font-monument text-[10px] tracking-widest hover:text-[#e5d3b3] transition-colors flex items-center gap-2">
-                      <span className="w-4 h-[1px] bg-white group-hover:bg-[#e5d3b3] transition-colors" />Zpět
+                      <span className="w-4 h-[1px] bg-white group-hover:bg-[#e5d3b3] transition-colors" />{t.back}
                     </button>
-                    <h2 className="font-editorial text-xl md:text-2xl">{activeCategory.title}</h2>
+                    <h2 className="font-editorial text-xl md:text-2xl">{t.categories?.[activeCategory.id as keyof typeof t.categories] || activeCategory.title}</h2>
                   </div>
                   <div className="space-y-3">
                     {SERVICES.filter(s => s.category === activeCategory.id).map((srv, i) => (
@@ -421,7 +421,7 @@ function MainApp() {
                             </div>
                           </div>
                           <button className="px-4 py-2 border border-[#e5d3b3] text-[#e5d3b3] font-monument text-[9px] tracking-widest rounded-lg shrink-0 ml-4 hover:bg-[#e5d3b3] hover:text-black transition-colors">
-                            Více informací
+                            {t.moreInfo}
                           </button>
                         </div>
                       </motion.div>

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { fetchAllBookings, updateBookingStatus, deleteBooking } from '../../lib/localStorageDb';
 import type { Booking } from '../../types/booking';
+import { translations } from '../../lib/i18n';
+import type { Lang } from '../../lib/i18n';
 
 const STATUS_COLORS: Record<string, string> = {
   pending: 'bg-yellow-500/20 text-yellow-300',
@@ -18,6 +20,8 @@ interface SkoleniApp { id: number; name: string; email: string; message: string;
 const MASTERS = ['Beata Kučerová', 'Štěpánka Kavínová'];
 
 export const AdminDashboard: React.FC = () => {
+  const [lang] = useState<Lang>('cs');
+  const t = translations[lang];
   const [activeTab, setActiveTab] = useState<Tab>('reze-beata');
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
@@ -58,7 +62,7 @@ export const AdminDashboard: React.FC = () => {
   };
 
   const handleDeleteBooking = (id: string) => {
-    if (confirm('Opravdu chcete smazat tuto rezervaci?')) {
+    if (confirm(t.confirmDeleteBooking)) {
       deleteBooking(id);
       loadBookings();
     }
@@ -71,7 +75,7 @@ export const AdminDashboard: React.FC = () => {
   };
 
   const handleDeleteVoucher = (id: number) => {
-    if (confirm('Opravdu smazat?')) {
+    if (confirm(t.confirmDelete)) {
       const updated = vouchers.filter(v => v.id !== id);
       localStorage.setItem('kbk_gift_orders', JSON.stringify(updated));
       setVouchers(updated);
@@ -108,11 +112,11 @@ export const AdminDashboard: React.FC = () => {
   };
 
   const tabs: { id: Tab; label: string }[] = [
-    { id: 'reze-beata', label: 'Rezervace — Beata' },
-    { id: 'reze-stepanka', label: 'Rezervace — Štěpánka' },
-    { id: 'poukazy', label: 'Poukazy' },
-    { id: 'skoleni', label: 'Školení' },
-    { id: 'blokovani', label: 'Blokování' },
+    { id: 'reze-beata', label: t.tabReservationsBeata },
+    { id: 'reze-stepanka', label: t.tabReservationsStepanka },
+    { id: 'poukazy', label: t.tabVouchers },
+    { id: 'skoleni', label: t.tabTraining },
+    { id: 'blokovani', label: t.tabBlocking },
   ];
 
   const handleSkoleniStatus = (id: number, status: string) => {
@@ -122,7 +126,7 @@ export const AdminDashboard: React.FC = () => {
   };
 
   const handleDeleteSkoleni = (id: number) => {
-    if (confirm('Opravdu smazat?')) {
+    if (confirm(t.confirmDelete)) {
       const updated = skoleniApps.filter(a => a.id !== id);
       localStorage.setItem('kbk_skoleni_apps', JSON.stringify(updated));
       setSkoleniApps(updated);
@@ -133,8 +137,8 @@ export const AdminDashboard: React.FC = () => {
     <div className="min-h-screen bg-[#0a0a0a] text-white p-6">
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">KBK Studio — Administrace</h1>
-          <button onClick={handleLogout} className="text-sm text-gray-400 hover:text-white">Odhlásit</button>
+          <h1 className="text-2xl font-bold">{t.adminTitle}</h1>
+          <button onClick={handleLogout} className="text-sm text-gray-400 hover:text-white">{t.logout}</button>
         </div>
 
         {/* Tabs */}
@@ -157,15 +161,15 @@ export const AdminDashboard: React.FC = () => {
             </div>
             <div className="bg-[#1a1a1a] rounded-xl border border-white/10 overflow-hidden">
               {loading ? (
-                <div className="p-8 text-center text-gray-400">Načítání...</div>
+                <div className="p-8 text-center text-gray-400">{t.loading}</div>
               ) : bookings.length === 0 ? (
-                <div className="p-8 text-center text-gray-400">Žádné rezervace</div>
+                <div className="p-8 text-center text-gray-400">{t.noBookings}</div>
               ) : (
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead className="bg-[#0a0a0a] border-b border-white/10">
                       <tr>
-                        {['Datum', 'Čas', 'Služba', 'Klient', 'Telefon', 'Stav', ''].map((h) => (
+                        {[t.dateLabel, t.timeLabel, t.headerService, t.headerClient, t.headerPhone, t.headerStatus, ''].map((h) => (
                           <th key={h} className="text-left px-4 py-3 font-medium text-gray-400">{h}</th>
                         ))}
                       </tr>
@@ -184,13 +188,13 @@ export const AdminDashboard: React.FC = () => {
                           <td className="px-4 py-3">
                             <select value={b.status} onChange={(e) => handleStatusChange(b.id, e.target.value)}
                               className={`text-xs rounded-full px-2 py-1 border-0 font-medium ${STATUS_COLORS[b.status] || ''}`}>
-                              <option value="pending">Čeká na potvrzení</option>
-                              <option value="confirmed">Potvrzeno</option>
-                              <option value="cancelled">Zrušeno</option>
+                              <option value="pending">{t.statusPending}</option>
+                              <option value="confirmed">{t.statusConfirmed}</option>
+                              <option value="cancelled">{t.statusCancelled}</option>
                             </select>
                           </td>
                           <td className="px-4 py-3">
-                            <button onClick={() => handleDeleteBooking(b.id)} className="text-red-400 hover:text-red-300 text-xs">Smazat</button>
+                            <button onClick={() => handleDeleteBooking(b.id)} className="text-red-400 hover:text-red-300 text-xs">{t.deleteBtn}</button>
                           </td>
                         </tr>
                       ))}
@@ -205,16 +209,16 @@ export const AdminDashboard: React.FC = () => {
         {/* Vouchers Tab */}
         {activeTab === 'poukazy' && (
           <div>
-            <h2 className="text-xl mb-4">Objednávky dárkových poukazů</h2>
+            <h2 className="text-xl mb-4">{t.giftOrdersTitle}</h2>
             <div className="bg-[#1a1a1a] rounded-xl border border-white/10 overflow-hidden">
               {vouchers.length === 0 ? (
-                <div className="p-8 text-center text-gray-400">Žádné objednávky poukazů</div>
+                <div className="p-8 text-center text-gray-400">{t.noVoucherOrders}</div>
               ) : (
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead className="bg-[#0a0a0a] border-b border-white/10">
                       <tr>
-                        {['Datum', 'Jméno', 'E-mail', 'Zpráva', 'Stav', ''].map((h) => (
+                        {[t.dateLabel, t.headerName, t.headerEmail, t.headerMessage, t.headerStatus, ''].map((h) => (
                           <th key={h} className="text-left px-4 py-3 font-medium text-gray-400">{h}</th>
                         ))}
                       </tr>
@@ -229,13 +233,13 @@ export const AdminDashboard: React.FC = () => {
                           <td className="px-4 py-3">
                             <select value={v.status} onChange={(e) => handleVoucherStatus(v.id, e.target.value)}
                               className={`text-xs rounded-full px-2 py-1 border-0 font-medium ${STATUS_COLORS[v.status] || ''}`}>
-                              <option value="new">Nová</option>
-                              <option value="confirmed">Vyřízeno</option>
-                              <option value="cancelled">Zamítnuto</option>
+                              <option value="new">{t.statusNew}</option>
+                              <option value="confirmed">{t.statusProcessed}</option>
+                              <option value="cancelled">{t.statusRejected}</option>
                             </select>
                           </td>
                           <td className="px-4 py-3">
-                            <button onClick={() => handleDeleteVoucher(v.id)} className="text-red-400 hover:text-red-300 text-xs">Smazat</button>
+                            <button onClick={() => handleDeleteVoucher(v.id)} className="text-red-400 hover:text-red-300 text-xs">{t.deleteBtn}</button>
                           </td>
                         </tr>
                       ))}
@@ -250,16 +254,16 @@ export const AdminDashboard: React.FC = () => {
         {/* Skoleni Tab */}
         {activeTab === 'skoleni' && (
           <div>
-            <h2 className="text-xl mb-4">Přihlášky na školení</h2>
+            <h2 className="text-xl mb-4">{t.skoleniApplicationsTitle}</h2>
             <div className="bg-[#1a1a1a] rounded-xl border border-white/10 overflow-hidden">
               {skoleniApps.length === 0 ? (
-                <div className="p-8 text-center text-gray-400">Žádné přihlášky</div>
+                <div className="p-8 text-center text-gray-400">{t.noApplications}</div>
               ) : (
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead className="bg-[#0a0a0a] border-b border-white/10">
                       <tr>
-                        {['Datum', 'Jméno', 'E-mail', 'Služba', 'Zpráva', 'Stav', ''].map(h => (
+                        {[t.dateLabel, t.headerName, t.headerEmail, t.headerService, t.headerMessage, t.headerStatus, ''].map(h => (
                           <th key={h} className="text-left px-4 py-3 font-medium text-gray-400">{h}</th>
                         ))}
                       </tr>
@@ -275,13 +279,13 @@ export const AdminDashboard: React.FC = () => {
                           <td className="px-4 py-3">
                             <select value={a.status} onChange={e => handleSkoleniStatus(a.id, e.target.value)}
                               className={`text-xs rounded-full px-2 py-1 border-0 font-medium ${STATUS_COLORS[a.status] || ''}`}>
-                              <option value="new">Nová</option>
-                              <option value="confirmed">Kontaktováno</option>
-                              <option value="cancelled">Zamítnuto</option>
+                              <option value="new">{t.statusNew}</option>
+                              <option value="confirmed">{t.statusContacted}</option>
+                              <option value="cancelled">{t.statusRejected}</option>
                             </select>
                           </td>
                           <td className="px-4 py-3">
-                            <button onClick={() => handleDeleteSkoleni(a.id)} className="text-red-400 hover:text-red-300 text-xs">Smazat</button>
+                            <button onClick={() => handleDeleteSkoleni(a.id)} className="text-red-400 hover:text-red-300 text-xs">{t.deleteBtn}</button>
                           </td>
                         </tr>
                       ))}
@@ -296,59 +300,59 @@ export const AdminDashboard: React.FC = () => {
         {/* Blocking Tab */}
         {activeTab === 'blokovani' && (
           <div>
-            <h2 className="text-xl mb-4">Blokování termínů</h2>
+            <h2 className="text-xl mb-4">{t.blockTitle}</h2>
 
             {/* Add block form */}
             <div className="bg-[#1a1a1a] p-6 rounded-xl border border-white/10 mb-6">
               <div className="grid grid-cols-2 md:grid-cols-5 gap-4 items-end">
                 <div>
-                  <label className="text-xs text-gray-400 block mb-1">Typ</label>
+                  <label className="text-xs text-gray-400 block mb-1">{t.blockTypeLabel}</label>
                   <select value={blockType} onChange={e => setBlockType(e.target.value as 'hour' | 'day')}
                     className="w-full bg-[#0a0a0a] border border-white/20 p-2 rounded-lg text-sm">
-                    <option value="hour">Blokovat hodinu</option>
-                    <option value="day">Blokovat celý den</option>
+                    <option value="hour">{t.blockHour}</option>
+                    <option value="day">{t.blockDay}</option>
                   </select>
                 </div>
                 <div>
-                  <label className="text-xs text-gray-400 block mb-1">Datum</label>
+                  <label className="text-xs text-gray-400 block mb-1">{t.dateLabel}</label>
                   <input type="date" value={blockDate} onChange={e => setBlockDate(e.target.value)}
                     className="w-full bg-[#0a0a0a] border border-white/20 p-2 rounded-lg text-sm text-white" />
                 </div>
                 {blockType === 'hour' && (
                   <div>
-                    <label className="text-xs text-gray-400 block mb-1">Čas</label>
+                    <label className="text-xs text-gray-400 block mb-1">{t.timeLabel}</label>
                     <input type="time" value={blockTime} onChange={e => setBlockTime(e.target.value)}
                       className="w-full bg-[#0a0a0a] border border-white/20 p-2 rounded-lg text-sm text-white" />
                   </div>
                 )}
                 <div>
-                  <label className="text-xs text-gray-400 block mb-1">Master</label>
+                  <label className="text-xs text-gray-400 block mb-1">{t.blockSpecialist}</label>
                   <select value={blockMaster} onChange={e => setBlockMaster(e.target.value)}
                     className="w-full bg-[#0a0a0a] border border-white/20 p-2 rounded-lg text-sm">
                     {MASTERS.map(m => <option key={m} value={m}>{m}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="text-xs text-gray-400 block mb-1">Poznámka</label>
-                  <input value={blockNote} onChange={e => setBlockNote(e.target.value)} placeholder="Volitelné"
+                  <label className="text-xs text-gray-400 block mb-1">{t.blockNote}</label>
+                  <input value={blockNote} onChange={e => setBlockNote(e.target.value)} placeholder={t.blockOptional}
                     className="w-full bg-[#0a0a0a] border border-white/20 p-2 rounded-lg text-sm" />
                 </div>
               </div>
               <button onClick={addBlock} className="mt-4 px-6 py-2 bg-[#e5d3b3] text-black rounded-lg text-sm font-medium">
-                + Přidat blokaci
+                + {t.addBlock}
               </button>
             </div>
 
             {/* Blocked list */}
             <div className="bg-[#1a1a1a] rounded-xl border border-white/10 overflow-hidden">
               {blockedSlots.length === 0 ? (
-                <div className="p-8 text-center text-gray-400">Žádné blokace</div>
+                <div className="p-8 text-center text-gray-400">{t.noBlocks}</div>
               ) : (
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead className="bg-[#0a0a0a] border-b border-white/10">
                       <tr>
-                        {['Datum', 'Typ', 'Čas', 'Master', 'Poznámka', ''].map(h => (
+                        {[t.dateLabel, t.blockTypeLabel, t.timeLabel, t.blockSpecialist, t.blockNote, ''].map(h => (
                           <th key={h} className="text-left px-4 py-3 font-medium text-gray-400">{h}</th>
                         ))}
                       </tr>
@@ -359,7 +363,7 @@ export const AdminDashboard: React.FC = () => {
                           <td className="px-4 py-3">{b.date}</td>
                           <td className="px-4 py-3">
                             <span className={`text-xs rounded-full px-2 py-1 font-medium ${b.type === 'day' ? 'bg-red-500/20 text-red-300' : 'bg-orange-500/20 text-orange-300'}`}>
-                              {b.type === 'day' ? 'Celý den' : 'Hodina'}
+                              {b.type === 'day' ? t.wholeDay : t.hourLabel}
                             </span>
                           </td>
                           <td className="px-4 py-3">{b.time || '—'}</td>
@@ -367,8 +371,8 @@ export const AdminDashboard: React.FC = () => {
                           <td className="px-4 py-3 text-gray-400">{b.note || '—'}</td>
                           <td className="px-4 py-3">
                             <button onClick={() => {
-                              if (confirm('Odebrat tuto blokaci?')) removeBlock(b.id);
-                            }} className="px-3 py-1 bg-red-600/20 text-red-400 rounded text-xs hover:bg-red-600/30 border border-red-500/30">Zrušit blokaci</button>
+                              if (confirm(t.confirmRemoveBlock)) removeBlock(b.id);
+                            }} className="px-3 py-1 bg-red-600/20 text-red-400 rounded text-xs hover:bg-red-600/30 border border-red-500/30">{t.cancelBlockBtn}</button>
                           </td>
                         </tr>
                       ))}

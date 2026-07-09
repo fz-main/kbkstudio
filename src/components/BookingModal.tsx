@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { BookingForm } from './BookingForm';
+import type { Translations } from '../lib/i18n';
 
 interface Props {
   isOpen: boolean;
@@ -8,9 +9,10 @@ interface Props {
   serviceName: string;
   durationMinutes: number;
   master?: string;
+  t: Translations;
 }
 
-export const BookingModal: React.FC<Props> = ({ isOpen, onClose, serviceId, serviceName, durationMinutes, master }) => {
+export const BookingModal: React.FC<Props> = ({ isOpen, onClose, serviceId, serviceName, durationMinutes, master, t }) => {
   const [confirmed, setConfirmed] = useState(false);
   if (!isOpen) return null;
   const handleClose = () => { setConfirmed(false); onClose(); };
@@ -20,7 +22,7 @@ export const BookingModal: React.FC<Props> = ({ isOpen, onClose, serviceId, serv
       <div className="bg-[#0a0a0a] rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto border border-white/10">
         <div className="sticky top-0 bg-[#0a0a0a] border-b border-white/10 px-6 py-4 flex items-center justify-between rounded-t-2xl">
           <h2 className="text-lg font-semibold text-white">
-            {confirmed ? 'Rezervace potvrzena!' : `Rezervace: ${serviceName}${master ? ` — ${master}` : ''}`}
+            {confirmed ? t.reservationConfirmedTitle : `${t.reservationLabel}: ${serviceName}${master ? ` — ${master}` : ''}`}
           </h2>
           <button onClick={handleClose} className="text-gray-400 hover:text-white text-xl">✕</button>
         </div>
@@ -28,13 +30,13 @@ export const BookingModal: React.FC<Props> = ({ isOpen, onClose, serviceId, serv
           {confirmed ? (
             <div className="text-center space-y-4 py-4">
               <div className="text-5xl">🎉</div>
-              <h3 className="text-xl font-semibold text-white">Vaše rezervace je potvrzena!</h3>
-              <p className="text-gray-400">Obratem vás budeme kontaktovat pro potvrzení.</p>
-              <button onClick={handleClose} className="w-full bg-[#e5d3b3] text-black py-2 rounded-lg font-medium hover:bg-white transition-colors">Hotovo</button>
+              <h3 className="text-xl font-semibold text-white">{t.reservationConfirmedMsg}</h3>
+              <p className="text-gray-400">{t.weWillContact}</p>
+              <button onClick={handleClose} className="w-full bg-[#e5d3b3] text-black py-2 rounded-lg font-medium hover:bg-white transition-colors">{t.done}</button>
             </div>
           ) : (
             <BookingForm serviceId={serviceId} serviceName={serviceName}
-              durationMinutes={durationMinutes} master={master} onSuccess={() => setConfirmed(true)} onCancel={handleClose} />
+              durationMinutes={durationMinutes} master={master} onSuccess={() => setConfirmed(true)} onCancel={handleClose} t={t} />
           )}
         </div>
       </div>
