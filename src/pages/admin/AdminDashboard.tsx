@@ -10,7 +10,7 @@ const STATUS_COLORS: Record<Booking['status'], string> = {
   cancelled: 'bg-red-500/20 text-red-300',
 };
 
-type Tab = 'bookings' | 'services' | 'about' | 'contacts';
+type Tab = 'bookings' | 'services' | 'about' | 'contacts' | 'vouchers';
 
 export const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('bookings');
@@ -34,6 +34,31 @@ export const AdminDashboard: React.FC = () => {
     facebook: '',
     instagram: ''
   });
+
+  // Vouchers state
+  interface VoucherOrder { id: number; name: string; email: string; message: string; date: string; status: string; }
+  const [vouchers, setVouchers] = useState<VoucherOrder[]>([]);
+
+  const loadVouchers = () => {
+    const data = JSON.parse(localStorage.getItem('kbk_gift_orders') || '[]');
+    setVouchers(data);
+  };
+
+  useEffect(() => { loadVouchers(); }, [activeTab]);
+
+  const handleDeleteVoucher = (id: number) => {
+    if (confirm('Opravdu smazat tuto objednávku?')) {
+      const updated = vouchers.filter(v => v.id !== id);
+      localStorage.setItem('kbk_gift_orders', JSON.stringify(updated));
+      setVouchers(updated);
+    }
+  };
+
+  const handleVoucherStatus = (id: number, status: string) => {
+    const updated = vouchers.map(v => v.id === id ? { ...v, status } : v);
+    localStorage.setItem('kbk_gift_orders', JSON.stringify(updated));
+    setVouchers(updated);
+  };
 
   // Load data from localStorage
   useEffect(() => {
@@ -111,6 +136,7 @@ export const AdminDashboard: React.FC = () => {
 
   const tabs: { id: Tab; label: string }[] = [
     { id: 'bookings', label: 'Rezervace' },
+    { id: 'vouchers', label: 'Poukazy' },
     { id: 'services', label: 'Služby' },
     { id: 'about', label: 'O mně' },
     { id: 'contacts', label: 'Kontakty' },
@@ -193,6 +219,56 @@ export const AdminDashboard: React.FC = () => {
                         </td>
                         <td className="px-4 py-3">
                           <button onClick={() => handleDeleteBooking(b.id)} className="text-red-400 hover:text-red-300 text-xs">Smazat</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Vouchers Tab */}
+        {activeTab === 'vouchers' && (
+          <div>
+            <h2 className="text-xl mb-4">Objednávky dárkových poukazů</h2>
+            <div className="bg-[#1a1a1a] rounded-xl border border-white/10 overflow-hidden">
+              {vouchers.length === 0 ? (
+                <div className="p-8 text-center text-gray-400">Žádné objednávky poukazů</div>
+              ) : (
+                <table className="w-full text-sm">
+                  <thead className="bg-[#0a0a0a] border-b border-white/10">
+                    <tr>
+                      {['Datum', 'Jméno', 'E-mail', 'Zpráva', 'Stav', ''].map((h) => (
+                        <th key={h} className="text-left px-4 py-3 font-medium text-gray-400">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5">
+                    {vouchers.map((v) => (
+                      <tr key={v.id} className="hover:bg-white/5">
+                        <td className="px-4 py-3 whitespace-nowrap">{new Date(v.date).toLocaleDateString('cs-CZ')}</td>
+                        <td className="px-4 py-3">{v.name}</td>
+                        <td className="px-4 py-3">{v.email}</td>
+                        <td className="px-4 py-3 max-w-xs truncate">{v.message || '—'}</td>
+                        <td className="px-4 py-3">
+                          <select
+                            value={v.status}
+                            onChange={(e) => handleVoucherStatus(v.id, e.target.value)}
+                            className={`text-xs rounded-full px-2 py-1 border-0 font-medium ${
+                              v.status === 'confirmed' ? 'bg-green-500/20 text-green-300' :
+                              v.status === 'cancelled' ? 'bg-red-500/20 text-red-300' :
+                              'bg-yellow-500/20 text-yellow-300'
+                            }`}
+                          >
+                            <option value="new">Nová</option>
+                            <option value="confirmed">Vyřízeno</option>
+                            <option value="cancelled">Zamítnuto</option>
+                          </select>
+                        </td>
+                        <td className="px-4 py-3">
+                          <button onClick={() => handleDeleteVoucher(v.id)} className="text-red-400 hover:text-red-300 text-xs">Smazat</button>
                         </td>
                       </tr>
                     ))}

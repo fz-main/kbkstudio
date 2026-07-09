@@ -54,6 +54,9 @@ function MainApp() {
   const [videoTransition, setVideoTransition] = useState(false);
   const [heroFading, setHeroFading] = useState(false);
   const [videoBlurred, setVideoBlurred] = useState(false);
+  const [showGiftPopup, setShowGiftPopup] = useState(false);
+  const [giftForm, setGiftForm] = useState({ name: '', email: '', message: '' });
+  const [giftSubmitted, setGiftSubmitted] = useState(false);
 
 
   const showCard = useCallback(() => {
@@ -315,10 +318,55 @@ function MainApp() {
                   <h3 className="font-editorial text-2xl md:text-4xl mb-4">{t.giftHeading}</h3>
                   <p className="font-montreal text-sm md:text-base text-white/60 leading-relaxed max-w-xl mx-auto mb-6">{t.giftDesc}</p>
                   <div className="flex flex-wrap justify-center gap-4">
-                    <a href={t.contacts?.instagram} target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-white text-black font-monument text-[10px] tracking-widest rounded-full hover:bg-[#e5d3b3] transition-colors">{t.giftWrite}</a>
+                    <button onClick={() => { setShowGiftPopup(true); setGiftSubmitted(false); setGiftForm({ name: '', email: '', message: '' }); }}
+                      className="px-6 py-3 bg-white text-black font-monument text-[10px] tracking-widest rounded-full hover:bg-[#e5d3b3] transition-colors">{t.giftWrite}</button>
                     <a href={`tel:${t.contacts?.phone?.replace(/\s/g, '')}`} className="px-6 py-3 border border-white/30 text-white font-monument text-[10px] tracking-widest rounded-full hover:bg-white/10 transition-colors">{t.giftCall}</a>
                   </div>
                 </div>
+
+                {/* Gift Popup */}
+                {showGiftPopup && (
+                  <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm px-4" onClick={() => setShowGiftPopup(false)}>
+                    <div className="glass-panel rounded-2xl p-6 md:p-8 w-full max-w-md relative" onClick={e => e.stopPropagation()}>
+                      <button onClick={() => setShowGiftPopup(false)} className="absolute top-3 right-4 text-white/50 hover:text-white text-xl">&times;</button>
+                      <div className="font-monument text-[9px] tracking-[0.3em] text-[#e5d3b3] mb-2 uppercase text-center">{t.giftTitle}</div>
+                      <h3 className="font-editorial text-xl md:text-2xl mb-5 text-center">{t.giftHeading}</h3>
+                      {giftSubmitted ? (
+                        <div className="text-center py-8">
+                          <div className="text-3xl mb-3">✓</div>
+                          <p className="font-montreal text-sm text-white/70">Vaše objednávka byla odeslána. Budeme vás kontaktovat.</p>
+                          <button onClick={() => setShowGiftPopup(false)} className="mt-6 px-6 py-2 bg-white/10 rounded-full font-monument text-[10px] tracking-widest hover:bg-white/20 transition-colors">Zavřít</button>
+                        </div>
+                      ) : (
+                        <form onSubmit={e => {
+                          e.preventDefault();
+                          if (!giftForm.name.trim() || !giftForm.email.trim()) return;
+                          const orders = JSON.parse(localStorage.getItem('kbk_gift_orders') || '[]');
+                          orders.push({ id: Date.now(), ...giftForm, date: new Date().toISOString(), status: 'new' });
+                          localStorage.setItem('kbk_gift_orders', JSON.stringify(orders));
+                          setGiftSubmitted(true);
+                        }} className="flex flex-col gap-4">
+                          <div>
+                            <label className="font-montreal text-xs text-[#e5d3b3] block mb-1">{t.yourName || 'Vaše jméno'}</label>
+                            <input required value={giftForm.name} onChange={e => setGiftForm({...giftForm, name: e.target.value})}
+                              className="w-full bg-black/40 border border-[#e5d3b3]/30 rounded-lg px-4 py-3 font-montreal text-sm text-white placeholder-white/30 focus:border-[#e5d3b3] outline-none" placeholder={t.yourName || 'Vaše jméno'} />
+                          </div>
+                          <div>
+                            <label className="font-montreal text-xs text-[#e5d3b3] block mb-1">{t.yourEmail || 'Váš e-mail'}</label>
+                            <input required type="email" value={giftForm.email} onChange={e => setGiftForm({...giftForm, email: e.target.value})}
+                              className="w-full bg-black/40 border border-[#e5d3b3]/30 rounded-lg px-4 py-3 font-montreal text-sm text-white placeholder-white/30 focus:border-[#e5d3b3] outline-none" placeholder={t.yourEmail || 'Váš e-mail'} />
+                          </div>
+                          <div>
+                            <label className="font-montreal text-xs text-[#e5d3b3] block mb-1">{t.yourMessage || 'Vaše zpráva (volitelný)'}</label>
+                            <textarea value={giftForm.message} onChange={e => setGiftForm({...giftForm, message: e.target.value})}
+                              className="w-full bg-black/40 border border-[#e5d3b3]/30 rounded-lg px-4 py-3 font-montreal text-sm text-white placeholder-white/30 focus:border-[#e5d3b3] outline-none h-28 resize-none" placeholder={t.yourMessage || 'Vaše zpráva (volitelný)'} />
+                          </div>
+                          <button type="submit" className="w-full py-3 bg-[#e5d3b3] text-black font-monument text-[10px] tracking-[0.2em] rounded-lg hover:bg-white transition-colors">Odeslat</button>
+                        </form>
+                      )}
+                    </div>
+                  </div>
+                )}
 
                 <HelixGallery title={t.galleryTitle} />
               </div>
