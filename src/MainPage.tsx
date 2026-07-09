@@ -403,7 +403,7 @@ function MainApp() {
                 onTouchStart={e => e.stopPropagation()}
                 onTouchEnd={e => e.stopPropagation()}
               >
-                <div className="flex-1 px-4 md:px-8 pt-4 md:pt-[60px] pb-20 overflow-y-auto">
+                <div className="flex-1 px-4 md:px-8 pt-16 md:pt-[60px] pb-20 overflow-y-auto">
                   <div className="flex items-center gap-4 mb-4">
                     <button onClick={() => setActiveCategory(null)} className="font-monument text-[10px] tracking-widest hover:text-[#e5d3b3] transition-colors flex items-center gap-2">
                       <span className="w-4 h-[1px] bg-white group-hover:bg-[#e5d3b3] transition-colors" />{t.back}
