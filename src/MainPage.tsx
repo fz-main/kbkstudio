@@ -146,7 +146,7 @@ function MainApp() {
       window.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('touchend', handleTouchEnd);
     };
-  }, [stage]);
+  }, [stage, activeCategory]);
 
   const letterVariants: any = {
     hidden: { opacity: 0, y: 50, filter: 'blur(10px)' },
