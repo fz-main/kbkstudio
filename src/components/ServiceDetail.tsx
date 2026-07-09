@@ -42,6 +42,13 @@ export default function ServiceDetail({ activeService, onBack, lang: _lang, t }:
 
       <div className="min-h-full px-4 md:px-16 pt-16 pb-16 flex flex-col gap-6 max-w-5xl mx-auto">
 
+        {isSkoleni && (
+          <div className="text-center">
+            <div className="font-monument text-[10px] md:text-xs tracking-[0.3em] text-[#e5d3b3] mb-2 uppercase">Školení</div>
+            <div className="font-montreal text-xs text-[#a3a3a3]">Profesionální vzdělávání v oboru permanentní make-up a kosmetické procedury</div>
+          </div>
+        )}
+
         {/* SERVICE CARD */}
         <div className="flex flex-col gap-6">
 
@@ -57,33 +64,64 @@ export default function ServiceDetail({ activeService, onBack, lang: _lang, t }:
               {srvT?.desc}
             </p>
 
-            {/* Benefits */}
-            {activeService.benefits && activeService.benefits.length > 0 && (
+            {/* Benefits & Process */}
+            {isSkoleni ? (
               <div className="mb-6 md:mb-8">
-                <div className="font-monument text-[9px] tracking-[0.2em] text-[#e5d3b3] mb-3">Výhody</div>
-                <ul className="flex flex-col gap-2">
-                  {activeService.benefits.map((b, i) => (
-                    <li key={i} className="font-montreal text-sm text-[#a3a3a3] flex items-center gap-2">
-                      <span className="w-1 h-1 rounded-full bg-[#e5d3b3] shrink-0" />
-                      {b}
-                    </li>
-                  ))}
-                </ul>
+                {activeService.benefits && activeService.benefits.length > 0 && (
+                  <div className="mb-6">
+                    <div className="font-monument text-xs tracking-[0.2em] text-[#e5d3b3] mb-3">Výhody školení</div>
+                    <ul className="flex flex-col gap-3">
+                      {activeService.benefits.map((b, i) => (
+                        <li key={i} className="font-montreal text-base text-[#a3a3a3] flex items-center gap-3">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#e5d3b3] shrink-0" />
+                          {b}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {activeService.process && activeService.process.length > 0 && (
+                  <div>
+                    <div className="font-monument text-xs tracking-[0.2em] text-[#e5d3b3] mb-3">Průběh školení</div>
+                    <ol className="flex flex-col gap-3">
+                      {activeService.process.map((p, i) => (
+                        <li key={i} className="font-montreal text-base text-[#a3a3a3] flex items-center gap-3">
+                          <span className="font-monument text-xs text-[#e5d3b3] w-5 text-right shrink-0">{i + 1}.</span>
+                          {p}
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                )}
               </div>
-            )}
-
-            {/* Process */}
-            {activeService.process && activeService.process.length > 0 && (
-              <div className="mb-6 md:mb-8">
-                <div className="font-monument text-[9px] tracking-[0.2em] text-[#e5d3b3] mb-3">Průběh ošetření</div>
-                <ol className="flex flex-col gap-2">
-                  {activeService.process.map((p, i) => (
-                    <li key={i} className="font-montreal text-sm text-[#a3a3a3] flex items-center gap-3">
-                      <span className="font-monument text-[10px] text-[#e5d3b3] w-5 text-right shrink-0">{i + 1}.</span>
-                      {p}
-                    </li>
-                  ))}
-                </ol>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 mb-6 md:mb-8">
+                {activeService.benefits && activeService.benefits.length > 0 && (
+                  <div>
+                    <div className="font-monument text-xs tracking-[0.2em] text-[#e5d3b3] mb-3">Výhody</div>
+                    <ul className="flex flex-col gap-3">
+                      {activeService.benefits.map((b, i) => (
+                        <li key={i} className="font-montreal text-sm md:text-base text-[#a3a3a3] flex items-start gap-3">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#e5d3b3] shrink-0 mt-2" />
+                          {b}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {activeService.process && activeService.process.length > 0 && (
+                  <div>
+                    <div className="font-monument text-xs tracking-[0.2em] text-[#e5d3b3] mb-3">Průběh ošetření</div>
+                    <ol className="flex flex-col gap-3">
+                      {activeService.process.map((p, i) => (
+                        <li key={i} className="font-montreal text-sm md:text-base text-[#a3a3a3] flex items-start gap-3">
+                          <span className="font-monument text-xs text-[#e5d3b3] w-5 text-right shrink-0">{i + 1}.</span>
+                          {p}
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                )}
               </div>
             )}
 
