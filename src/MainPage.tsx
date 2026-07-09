@@ -310,6 +310,18 @@ function MainApp() {
                   </motion.div>
                 </div>
                 <Testimonials testimonials={t.testimonialsList} title={t.testimonialsTitle} />
+
+                {/* Gift Certificates */}
+                <div className="w-full mt-12 glass-panel rounded-3xl p-6 md:p-10 text-center">
+                  <div className="font-monument text-[10px] md:text-xs tracking-[0.25em] text-[#e5d3b3] mb-4">{t.giftTitle}</div>
+                  <h3 className="font-editorial text-2xl md:text-4xl mb-4">{t.giftHeading}</h3>
+                  <p className="font-montreal text-sm md:text-base text-white/60 leading-relaxed max-w-xl mx-auto mb-6">{t.giftDesc}</p>
+                  <div className="flex flex-wrap justify-center gap-4">
+                    <a href={t.contacts?.instagram} target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-white text-black font-monument text-[10px] tracking-widest rounded-full hover:bg-[#e5d3b3] transition-colors">{t.giftWrite}</a>
+                    <a href={`tel:${t.contacts?.phone?.replace(/\s/g, '')}`} className="px-6 py-3 border border-white/30 text-white font-monument text-[10px] tracking-widest rounded-full hover:bg-white/10 transition-colors">{t.giftCall}</a>
+                  </div>
+                </div>
+
                 <HelixGallery title={t.galleryTitle} />
               </div>
             </motion.div>
