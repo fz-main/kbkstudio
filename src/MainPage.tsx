@@ -289,7 +289,7 @@ function MainApp() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
                   <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
                     className="flex gap-6 items-start cursor-pointer" onClick={() => setLightboxImage(t.aboutPhotoBeata)}>
-                    <img src={t.aboutPhotoBeata} alt="Beata Kučerová" className="w-40 h-52 md:w-52 md:h-64 object-cover rounded-2xl shadow-xl flex-shrink-0" />
+                    <img src={t.aboutPhotoBeata} alt="Beata Kučerová" className="w-44 h-72 md:w-56 md:h-[360px] object-cover rounded-2xl shadow-xl flex-shrink-0" />
                     <div className="flex flex-col gap-2 pt-2 min-w-0">
                       <div className="font-editorial text-xl md:text-2xl text-white">Beata Kučerová</div>
                       <div className="font-montreal text-xs md:text-sm text-[#e5d3b3]">Zakladatelka · PMU · World Champion</div>
@@ -298,7 +298,7 @@ function MainApp() {
                   </motion.div>
                   <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.3 }}
                     className="flex gap-6 items-start cursor-pointer" onClick={() => setLightboxImage(t.aboutPhotoStepanka)}>
-                    <img src={t.aboutPhotoStepanka} alt="Štěpánka Kavínová" className="w-40 h-52 md:w-52 md:h-64 object-cover rounded-2xl shadow-xl flex-shrink-0" />
+                    <img src={t.aboutPhotoStepanka} alt="Štěpánka Kavínová" className="w-44 h-72 md:w-56 md:h-[360px] object-cover rounded-2xl shadow-xl flex-shrink-0" />
                     <div className="flex flex-col gap-2 pt-2 min-w-0">
                       <div className="font-editorial text-xl md:text-2xl text-white">Štěpánka Kavínová</div>
                       <div className="font-montreal text-xs md:text-sm text-[#e5d3b3]">Kosmetička · Přístrojová ošetření</div>
