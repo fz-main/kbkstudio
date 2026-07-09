@@ -286,23 +286,23 @@ function MainApp() {
                 <div className="font-monument text-[9px] tracking-[0.3em] text-[#e5d3b3] mb-2 uppercase text-center">{t.aboutLabel}</div>
                 <h2 className="font-editorial text-3xl md:text-5xl mb-1 leading-tight text-center">{t.ownerName}</h2>
                 <div className="font-montreal text-xs text-[#a3a3a3] tracking-widest mb-6 text-center">{t.aboutFounder}</div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
                   <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
-                    className="flex gap-5 items-start cursor-pointer" onClick={() => setLightboxImage(t.aboutPhotoBeata)}>
-                    <img src={t.aboutPhotoBeata} alt="Beata Kučerová" className="w-32 h-44 md:w-40 md:h-52 object-cover rounded-2xl shadow-xl flex-shrink-0" />
+                    className="flex gap-6 items-start cursor-pointer" onClick={() => setLightboxImage(t.aboutPhotoBeata)}>
+                    <img src={t.aboutPhotoBeata} alt="Beata Kučerová" className="w-40 h-52 md:w-52 md:h-64 object-cover rounded-2xl shadow-xl flex-shrink-0" />
                     <div className="flex flex-col gap-2 pt-2 min-w-0">
-                      <div className="font-editorial text-lg md:text-xl text-white">Beata Kučerová</div>
-                      <div className="font-montreal text-[11px] md:text-xs text-[#e5d3b3]">Zakladatelka · PMU · World Champion</div>
-                      <p className="font-montreal text-xs md:text-sm text-[#a3a3a3] leading-relaxed">{t.aboutBioBeata}</p>
+                      <div className="font-editorial text-xl md:text-2xl text-white">Beata Kučerová</div>
+                      <div className="font-montreal text-xs md:text-sm text-[#e5d3b3]">Zakladatelka · PMU · World Champion</div>
+                      <p className="font-montreal text-sm md:text-base text-[#a3a3a3] leading-relaxed">{t.aboutBioBeata}</p>
                     </div>
                   </motion.div>
                   <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.3 }}
-                    className="flex gap-5 items-start cursor-pointer" onClick={() => setLightboxImage(t.aboutPhotoStepanka)}>
-                    <img src={t.aboutPhotoStepanka} alt="Štěpánka Kavínová" className="w-32 h-44 md:w-40 md:h-52 object-cover rounded-2xl shadow-xl flex-shrink-0" />
+                    className="flex gap-6 items-start cursor-pointer" onClick={() => setLightboxImage(t.aboutPhotoStepanka)}>
+                    <img src={t.aboutPhotoStepanka} alt="Štěpánka Kavínová" className="w-40 h-52 md:w-52 md:h-64 object-cover rounded-2xl shadow-xl flex-shrink-0" />
                     <div className="flex flex-col gap-2 pt-2 min-w-0">
-                      <div className="font-editorial text-lg md:text-xl text-white">Štěpánka Kavínová</div>
-                      <div className="font-montreal text-[11px] md:text-xs text-[#e5d3b3]">Kosmetička · Přístrojová ošetření</div>
-                      <p className="font-montreal text-xs md:text-sm text-[#a3a3a3] leading-relaxed">{t.aboutBioStepanka}</p>
+                      <div className="font-editorial text-xl md:text-2xl text-white">Štěpánka Kavínová</div>
+                      <div className="font-montreal text-xs md:text-sm text-[#e5d3b3]">Kosmetička · Přístrojová ošetření</div>
+                      <p className="font-montreal text-sm md:text-base text-[#a3a3a3] leading-relaxed">{t.aboutBioStepanka}</p>
                     </div>
                   </motion.div>
                 </div>
