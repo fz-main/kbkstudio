@@ -326,8 +326,8 @@ function MainApp() {
 
                 {/* Gift Popup */}
                 {showGiftPopup && (
-                  <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-md px-4" onClick={() => setShowGiftPopup(false)}>
-                    <div className="bg-[#111111] border border-white/15 rounded-2xl p-6 md:p-8 w-full max-w-md relative shadow-2xl" onClick={e => e.stopPropagation()}>
+                  <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm px-4" onClick={() => setShowGiftPopup(false)}>
+                    <div className="bg-[#1a1a1a] border border-white/10 rounded-2xl p-6 md:p-8 w-full max-w-md relative shadow-2xl" onClick={e => e.stopPropagation()}>
                       <button onClick={() => setShowGiftPopup(false)} className="absolute top-3 right-4 text-white/50 hover:text-white text-xl">&times;</button>
                       <div className="font-monument text-[9px] tracking-[0.3em] text-[#e5d3b3] mb-2 uppercase text-center">{t.giftTitle}</div>
                       <h3 className="font-editorial text-xl md:text-2xl mb-5 text-center">{t.giftHeading}</h3>
