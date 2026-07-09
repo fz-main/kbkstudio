@@ -265,7 +265,7 @@ function MainApp() {
                     <h2 className="font-editorial text-2xl md:text-4xl">{t.servicesTitle || 'Služby'}</h2>
                   </div>
                   {/* 9 categories: 3 rows x 3 cols */}
-                  <div className="grid grid-cols-3 gap-y-10 md:gap-y-14 w-full max-w-4xl mx-auto">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-y-6 sm:gap-y-10 md:gap-y-14 w-full max-w-4xl mx-auto">
                     {SERVICE_CATEGORIES.filter(cat => SERVICES.some(s => s.category === cat.id)).map((cat, i) => (
                       <motion.div key={cat.id} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: i * 0.06 }}
                         className="flex justify-center">
@@ -408,7 +408,7 @@ function MainApp() {
                     <button onClick={() => setActiveCategory(null)} className="font-monument text-[10px] tracking-widest hover:text-[#e5d3b3] transition-colors flex items-center gap-2">
                       <span className="w-4 h-[1px] bg-white group-hover:bg-[#e5d3b3] transition-colors" />{t.back}
                     </button>
-                    <h2 className="font-editorial text-xl md:text-2xl">{t.categories?.[activeCategory.id as keyof typeof t.categories] || activeCategory.title}</h2>
+                    <h2 className="font-editorial text-xl md:text-2xl hidden md:block">{t.categories?.[activeCategory.id as keyof typeof t.categories] || activeCategory.title}</h2>
                     <div className="flex-1" />
                     <button onClick={() => { setActiveCategory(null); setStage(STAGES.ABOUT); }}
                       className="font-monument text-[9px] md:text-[10px] tracking-widest text-white/50 hover:text-[#e5d3b3] transition-colors">{t.aboutLabel}</button>
