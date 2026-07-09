@@ -31,6 +31,8 @@ function ContactsBar({ t }: { t: ReturnType<typeof translations.__extract> }) {
         <a href={t.contacts?.facebook} target="_blank" rel="noopener noreferrer" className="font-monument text-[9px] tracking-widest text-white/50 hover:text-[#e5d3b3] transition-colors uppercase">Facebook</a>
         <span className="text-white/20">·</span>
         <a href={t.contacts?.instagram} target="_blank" rel="noopener noreferrer" className="font-monument text-[9px] tracking-widest text-white/50 hover:text-[#e5d3b3] transition-colors uppercase">Instagram</a>
+        <span className="text-white/20">·</span>
+        <a href="#/reklamacni-rad" className="font-monument text-[9px] tracking-widest text-white/50 hover:text-[#e5d3b3] transition-colors uppercase">{t.reklamacniRad || 'Reklamační řád'}</a>
       </div>
     </div>
   );
@@ -405,6 +407,9 @@ function MainApp() {
                       <span className="w-4 h-[1px] bg-white group-hover:bg-[#e5d3b3] transition-colors" />{t.back}
                     </button>
                     <h2 className="font-editorial text-xl md:text-2xl">{t.categories?.[activeCategory.id as keyof typeof t.categories] || activeCategory.title}</h2>
+                    <div className="flex-1" />
+                    <button onClick={() => { setActiveCategory(null); setStage(STAGES.ABOUT); }}
+                      className="font-monument text-[9px] md:text-[10px] tracking-widest text-white/50 hover:text-[#e5d3b3] transition-colors">{t.aboutLabel}</button>
                   </div>
                   <div className="space-y-3">
                     {SERVICES.filter(s => s.category === activeCategory.id).map((srv, i) => (
