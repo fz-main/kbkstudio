@@ -110,6 +110,7 @@ export default function ServiceDetail({ activeService, onBack, lang: _lang, t }:
         </div>
 
         {/* MASTER BLOCK */}
+        {!isSkoleni && masters.length > 0 && (
         <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.5 }}
           className="glass-panel rounded-3xl p-6 md:p-10 flex flex-col md:flex-row items-start md:items-center gap-6">
 
@@ -139,6 +140,7 @@ export default function ServiceDetail({ activeService, onBack, lang: _lang, t }:
             </div>
           </div>
         </motion.div>
+        )}
 
         {/* MASTER SELECTOR + BOOKING */}
         <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.7 }}
