@@ -68,7 +68,7 @@ export default function ServiceDetail({ activeService, onBack, lang: _lang, t }:
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 mb-6 md:mb-8">
               {activeService.benefits && activeService.benefits.length > 0 && (
                 <div>
-                  <div className="font-monument text-xs tracking-[0.2em] text-[#e5d3b3] mb-3">{isSkoleni ? 'Výhody školení' : 'Výhody'}</div>
+                  <div className="font-monument text-xs tracking-[0.2em] text-[#e5d3b3] mb-3">Výhody</div>
                   <ul className="flex flex-col gap-3">
                     {activeService.benefits.map((b, i) => (
                       <li key={i} className="font-montreal text-sm md:text-base text-[#a3a3a3] flex items-start gap-3">
@@ -81,7 +81,7 @@ export default function ServiceDetail({ activeService, onBack, lang: _lang, t }:
               )}
               {activeService.process && activeService.process.length > 0 && (
                 <div>
-                  <div className="font-monument text-xs tracking-[0.2em] text-[#e5d3b3] mb-3">{isSkoleni ? 'Průběh školení' : 'Průběh ošetření'}</div>
+                  <div className="font-monument text-xs tracking-[0.2em] text-[#e5d3b3] mb-3">Průběh ošetření</div>
                   <ol className="flex flex-col gap-3">
                     {activeService.process.map((p, i) => (
                       <li key={i} className="font-montreal text-sm md:text-base text-[#a3a3a3] flex items-start gap-3">
