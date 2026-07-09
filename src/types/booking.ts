@@ -12,6 +12,7 @@ export interface Booking {
   duration_minutes: number;
   status: BookingStatus;
   notes?: string;
+  master?: string;
   created_at: string;
   updated_at: string;
 }

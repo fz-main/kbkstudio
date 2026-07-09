@@ -193,6 +193,7 @@ export default function ServiceDetail({ activeService, onBack, lang: _lang, t }:
         serviceId={activeService.id}
         serviceName={srvT?.title || activeService.title}
         durationMinutes={activeService.durationMinutes || 60}
+        master={selectedMaster || undefined}
       />
 
       {/* Application Popup for Školení */}

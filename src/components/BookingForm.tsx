@@ -7,19 +7,20 @@ interface Props {
   serviceId: string;
   serviceName: string;
   durationMinutes: number;
+  master?: string;
   onSuccess?: (id: string) => void;
   onCancel?: () => void;
 }
 
 
 export const BookingForm: React.FC<Props> = ({
-  serviceId, serviceName, durationMinutes, onSuccess, onCancel,
+  serviceId, serviceName, durationMinutes, master, onSuccess, onCancel,
 }) => {
   const {
     slots, selectedDate, selectedTime,
     minDate, maxDate, isLoading, error,
     setSelectedDate, setSelectedTime,
-  } = useBookingSlots({ duration: durationMinutes });
+  } = useBookingSlots({ duration: durationMinutes, master });
 
   const [form, setForm] = useState({ customer_name: '', customer_email: '', customer_phone: '', notes: '' });
   const [step, setStep] = useState<'datetime' | 'details'>('datetime');
@@ -46,6 +47,7 @@ export const BookingForm: React.FC<Props> = ({
         customer_email: form.customer_email,
         customer_phone: form.customer_phone,
         notes: form.notes || undefined,
+        master: master || undefined,
       });
       onSuccess?.(booking.id);
     } catch (e) {

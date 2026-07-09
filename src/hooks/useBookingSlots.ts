@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { generateTimeSlots } from '../lib/bookingUtils';
 import { fetchAllBookings } from '../lib/localStorageDb';
 
-export function useBookingSlots({ duration }: { duration: number }) {
+export function useBookingSlots({ duration, master }: { duration: number; master?: string }) {
   const [slots, setSlots] = useState<{ time: string; label: string; available: boolean }[]>([]);
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
@@ -14,7 +14,10 @@ export function useBookingSlots({ duration }: { duration: number }) {
     setIsLoading(true);
     try {
       const bookings = fetchAllBookings();
-      const booked = bookings.map(b => ({ start_time: b.start_time, end_time: b.end_time }));
+      const filtered = master
+        ? bookings.filter(b => !b.master || b.master === master)
+        : bookings;
+      const booked = filtered.map(b => ({ start_time: b.start_time, end_time: b.end_time }));
       const blocked: any[] = [];
       const opening = '09:00';
       const closing = '18:00';
@@ -26,7 +29,7 @@ export function useBookingSlots({ duration }: { duration: number }) {
     } finally {
       setIsLoading(false);
     }
-  }, [selectedDate, duration]);
+  }, [selectedDate, duration, master]);
 
   useEffect(() => {
     if (!selectedDate) {

@@ -7,9 +7,10 @@ interface Props {
   serviceId: string;
   serviceName: string;
   durationMinutes: number;
+  master?: string;
 }
 
-export const BookingModal: React.FC<Props> = ({ isOpen, onClose, serviceId, serviceName, durationMinutes }) => {
+export const BookingModal: React.FC<Props> = ({ isOpen, onClose, serviceId, serviceName, durationMinutes, master }) => {
   const [confirmed, setConfirmed] = useState(false);
   if (!isOpen) return null;
   const handleClose = () => { setConfirmed(false); onClose(); };
@@ -19,7 +20,7 @@ export const BookingModal: React.FC<Props> = ({ isOpen, onClose, serviceId, serv
       <div className="bg-[#0a0a0a] rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto border border-white/10">
         <div className="sticky top-0 bg-[#0a0a0a] border-b border-white/10 px-6 py-4 flex items-center justify-between rounded-t-2xl">
           <h2 className="text-lg font-semibold text-white">
-            {confirmed ? 'Rezervace potvrzena!' : `Rezervace: ${serviceName}`}
+            {confirmed ? 'Rezervace potvrzena!' : `Rezervace: ${serviceName}${master ? ` — ${master}` : ''}`}
           </h2>
           <button onClick={handleClose} className="text-gray-400 hover:text-white text-xl">✕</button>
         </div>
@@ -33,7 +34,7 @@ export const BookingModal: React.FC<Props> = ({ isOpen, onClose, serviceId, serv
             </div>
           ) : (
             <BookingForm serviceId={serviceId} serviceName={serviceName}
-              durationMinutes={durationMinutes} onSuccess={() => setConfirmed(true)} onCancel={handleClose} />
+              durationMinutes={durationMinutes} master={master} onSuccess={() => setConfirmed(true)} onCancel={handleClose} />
           )}
         </div>
       </div>
