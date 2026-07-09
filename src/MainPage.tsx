@@ -270,7 +270,17 @@ function MainApp() {
                         <MenuButton service={{ id: cat.id, title: cat.title, shortTitle: cat.title, subtitle: `${SERVICES.filter(s => s.category === cat.id).length} služeb`, desc: '', benefits: [], process: [], price: '', time: '', durationMinutes: 0, category: cat.id, video: '', transition: '', position: [0,0,0], color: '#e5d3b3' }}
                           translatedTitle={cat.title}
                           translatedSubtitle={`${SERVICES.filter(s => s.category === cat.id).length} služeb`}
-                          onClick={() => { setActiveCategory(cat); setStage(STAGES.MENU); }}
+                          onClick={() => {
+                            const catServices = SERVICES.filter(s => s.category === cat.id);
+                            if (catServices.length === 1) {
+                              setActiveService(catServices[0]);
+                              setShowTransition(false);
+                              setStage(STAGES.SERVICE_DETAIL);
+                            } else {
+                              setActiveCategory(cat);
+                              setStage(STAGES.MENU);
+                            }
+                          }}
                           enterLabel={t.enterModule} />
                       </motion.div>
                     ))}
