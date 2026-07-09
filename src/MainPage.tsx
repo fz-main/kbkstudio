@@ -288,7 +288,9 @@ function MainApp() {
                     ))}
                    </div>
                 </div>
-                <div className="shrink-0 mt-4">
+                <div className="shrink-0 mt-4 flex flex-col items-center gap-3">
+                  <button onClick={() => setStage(STAGES.ABOUT)}
+                    className="font-monument text-[9px] tracking-[0.3em] text-white/50 hover:text-[#e5d3b3] transition-colors uppercase">{t.aboutLabel}</button>
                   <ContactsBar t={t} />
                 </div>
               </div>

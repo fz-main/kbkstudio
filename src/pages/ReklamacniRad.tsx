@@ -5,7 +5,7 @@ export default function ReklamacniRad() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white px-4 py-16">
+    <div className="min-h-screen bg-[#0a0a0a] text-white px-4 py-16 overflow-y-auto">
       <div className="max-w-3xl mx-auto">
         <button onClick={() => navigate(-1)} className="mb-8 font-monument text-[10px] md:text-xs tracking-widest hover:text-[#e5d3b3] transition-colors flex items-center gap-3 group">
           <span className="w-4 h-[1px] bg-white group-hover:bg-[#e5d3b3] transition-colors" />
