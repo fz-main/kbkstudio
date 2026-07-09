@@ -302,7 +302,9 @@ export const AdminDashboard: React.FC = () => {
                           <td className="px-4 py-3">{b.master}</td>
                           <td className="px-4 py-3 text-gray-400">{b.note || '—'}</td>
                           <td className="px-4 py-3">
-                            <button onClick={() => removeBlock(b.id)} className="text-red-400 hover:text-red-300 text-xs">Odebrat</button>
+                            <button onClick={() => {
+                              if (confirm('Odebrat tuto blokaci?')) removeBlock(b.id);
+                            }} className="px-3 py-1 bg-red-600/20 text-red-400 rounded text-xs hover:bg-red-600/30 border border-red-500/30">Zrušit blokaci</button>
                           </td>
                         </tr>
                       ))}
