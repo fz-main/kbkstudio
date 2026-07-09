@@ -68,7 +68,15 @@ function MainApp() {
   const handleServiceClick = (service: Service) => {
     // If clicking a category (has no price/duration), show category services
     if (!service.price && !service.durationMinutes) {
-      setActiveCategory(SERVICE_CATEGORIES.find(c => c.id === service.category));
+      const cat = SERVICE_CATEGORIES.find(c => c.id === service.category);
+      const catServices = SERVICES.filter(s => s.category === service.category);
+      if (catServices.length === 1) {
+        setActiveService(catServices[0]);
+        setShowTransition(false);
+        setStage(STAGES.SERVICE_DETAIL);
+        return;
+      }
+      setActiveCategory(cat);
       return;
     }
     if (!service.transition) {

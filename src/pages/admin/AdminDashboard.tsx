@@ -9,10 +9,11 @@ const STATUS_COLORS: Record<string, string> = {
   new: 'bg-yellow-500/20 text-yellow-300',
 };
 
-type Tab = 'reze-beata' | 'reze-stepanka' | 'poukazy' | 'blokovani';
+type Tab = 'reze-beata' | 'reze-stepanka' | 'poukazy' | 'blokovani' | 'skoleni';
 
 interface BlockedSlot { id: number; date: string; time?: string; type: 'hour' | 'day'; master: string; note: string; }
 interface VoucherOrder { id: number; name: string; email: string; message: string; date: string; status: string; }
+interface SkoleniApp { id: number; name: string; email: string; message: string; service: string; date: string; status: string; }
 
 const MASTERS = ['Beata Kučerová', 'Štěpánka Kavínová'];
 
@@ -28,10 +29,12 @@ export const AdminDashboard: React.FC = () => {
   const [blockType, setBlockType] = useState<'hour' | 'day'>('hour');
   const [blockMaster, setBlockMaster] = useState(MASTERS[0]);
   const [blockNote, setBlockNote] = useState('');
+  const [skoleniApps, setSkoleniApps] = useState<SkoleniApp[]>([]);
 
   useEffect(() => {
     setBlockedSlots(JSON.parse(localStorage.getItem('kbk_blocked_slots') || '[]'));
     setVouchers(JSON.parse(localStorage.getItem('kbk_gift_orders') || '[]'));
+    setSkoleniApps(JSON.parse(localStorage.getItem('kbk_skoleni_apps') || '[]'));
   }, []);
 
   const loadBookings = () => {
@@ -108,8 +111,23 @@ export const AdminDashboard: React.FC = () => {
     { id: 'reze-beata', label: 'Rezervace — Beata' },
     { id: 'reze-stepanka', label: 'Rezervace — Štěpánka' },
     { id: 'poukazy', label: 'Poukazy' },
+    { id: 'skoleni', label: 'Školení' },
     { id: 'blokovani', label: 'Blokování' },
   ];
+
+  const handleSkoleniStatus = (id: number, status: string) => {
+    const updated = skoleniApps.map(a => a.id === id ? { ...a, status } : a);
+    localStorage.setItem('kbk_skoleni_apps', JSON.stringify(updated));
+    setSkoleniApps(updated);
+  };
+
+  const handleDeleteSkoleni = (id: number) => {
+    if (confirm('Opravdu smazat?')) {
+      const updated = skoleniApps.filter(a => a.id !== id);
+      localStorage.setItem('kbk_skoleni_apps', JSON.stringify(updated));
+      setSkoleniApps(updated);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white p-6">
@@ -218,6 +236,52 @@ export const AdminDashboard: React.FC = () => {
                           </td>
                           <td className="px-4 py-3">
                             <button onClick={() => handleDeleteVoucher(v.id)} className="text-red-400 hover:text-red-300 text-xs">Smazat</button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Skoleni Tab */}
+        {activeTab === 'skoleni' && (
+          <div>
+            <h2 className="text-xl mb-4">Přihlášky na školení</h2>
+            <div className="bg-[#1a1a1a] rounded-xl border border-white/10 overflow-hidden">
+              {skoleniApps.length === 0 ? (
+                <div className="p-8 text-center text-gray-400">Žádné přihlášky</div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead className="bg-[#0a0a0a] border-b border-white/10">
+                      <tr>
+                        {['Datum', 'Jméno', 'E-mail', 'Služba', 'Zpráva', 'Stav', ''].map(h => (
+                          <th key={h} className="text-left px-4 py-3 font-medium text-gray-400">{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5">
+                      {skoleniApps.map(a => (
+                        <tr key={a.id} className="hover:bg-white/5">
+                          <td className="px-4 py-3 whitespace-nowrap">{new Date(a.date).toLocaleDateString('cs-CZ')}</td>
+                          <td className="px-4 py-3">{a.name}</td>
+                          <td className="px-4 py-3">{a.email}</td>
+                          <td className="px-4 py-3 text-[#e5d3b3]">{a.service}</td>
+                          <td className="px-4 py-3 max-w-xs truncate">{a.message || '—'}</td>
+                          <td className="px-4 py-3">
+                            <select value={a.status} onChange={e => handleSkoleniStatus(a.id, e.target.value)}
+                              className={`text-xs rounded-full px-2 py-1 border-0 font-medium ${STATUS_COLORS[a.status] || ''}`}>
+                              <option value="new">Nová</option>
+                              <option value="confirmed">Kontaktováno</option>
+                              <option value="cancelled">Zamítnuto</option>
+                            </select>
+                          </td>
+                          <td className="px-4 py-3">
+                            <button onClick={() => handleDeleteSkoleni(a.id)} className="text-red-400 hover:text-red-300 text-xs">Smazat</button>
                           </td>
                         </tr>
                       ))}

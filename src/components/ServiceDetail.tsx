@@ -17,6 +17,10 @@ export default function ServiceDetail({ activeService, onBack, lang: _lang, t }:
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMaster, setSelectedMaster] = useState<string>('');
   const masters = Array.isArray(mastersT) ? mastersT : [];
+  const isSkoleni = activeService.category === 'skoleni';
+  const [showApplication, setShowApplication] = useState(false);
+  const [appForm, setAppForm] = useState({ name: '', email: '', message: '' });
+  const [appSubmitted, setAppSubmitted] = useState(false);
 
   return (
     <motion.div
@@ -84,14 +88,22 @@ export default function ServiceDetail({ activeService, onBack, lang: _lang, t }:
             )}
 
             <div className="flex flex-wrap items-center gap-4 md:gap-6 border-t border-white/10 pt-5">
-              <div>
-                <div className="font-monument text-[8px] text-[#a3a3a3] mb-1 tracking-widest">{t.duration}</div>
-                <div className="font-editorial text-lg md:text-2xl">{activeService.time}</div>
-              </div>
-              <div>
-                <div className="font-monument text-[8px] text-[#a3a3a3] mb-1 tracking-widest">{t.investment}</div>
-                <div className="font-editorial text-lg md:text-2xl text-[#e5d3b3]">{activeService.price}</div>
-              </div>
+              {isSkoleni ? (
+                <div>
+                  <div className="font-montreal text-sm text-[#e5d3b3]">Cena a termín dle individuální domluvy</div>
+                </div>
+              ) : (
+                <>
+                  <div>
+                    <div className="font-monument text-[8px] text-[#a3a3a3] mb-1 tracking-widest">{t.duration}</div>
+                    <div className="font-editorial text-lg md:text-2xl">{activeService.time}</div>
+                  </div>
+                  <div>
+                    <div className="font-monument text-[8px] text-[#a3a3a3] mb-1 tracking-widest">{t.investment}</div>
+                    <div className="font-editorial text-lg md:text-2xl text-[#e5d3b3]">{activeService.price}</div>
+                  </div>
+                </>
+              )}
             </div>
           </motion.div>
 
@@ -148,12 +160,21 @@ export default function ServiceDetail({ activeService, onBack, lang: _lang, t }:
             </div>
           )}
 
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="w-full px-6 py-4 bg-white text-black font-monument text-[10px] tracking-widest rounded-full hover:bg-[#e5d3b3] transition-colors uppercase"
-          >
-            {t.reserve}
-          </button>
+          {isSkoleni ? (
+            <button
+              onClick={() => { setShowApplication(true); setAppSubmitted(false); setAppForm({ name: '', email: '', message: '' }); }}
+              className="w-full px-6 py-4 bg-white text-black font-monument text-[10px] tracking-widest rounded-full hover:bg-[#e5d3b3] transition-colors uppercase"
+            >
+              Podat anketu
+            </button>
+          ) : (
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="w-full px-6 py-4 bg-white text-black font-monument text-[10px] tracking-widest rounded-full hover:bg-[#e5d3b3] transition-colors uppercase"
+            >
+              {t.reserve}
+            </button>
+          )}
         </motion.div>
       </div>
 
@@ -164,6 +185,50 @@ export default function ServiceDetail({ activeService, onBack, lang: _lang, t }:
         serviceName={srvT?.title || activeService.title}
         durationMinutes={activeService.durationMinutes || 60}
       />
+
+      {/* Application Popup for Školení */}
+      {showApplication && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm px-4" onClick={() => setShowApplication(false)}>
+          <div className="bg-[#1a1a1a] border border-white/10 rounded-2xl p-6 md:p-8 w-full max-w-md relative shadow-2xl" onClick={e => e.stopPropagation()}>
+            <button onClick={() => setShowApplication(false)} className="absolute top-3 right-4 text-white/50 hover:text-white text-xl">&times;</button>
+            <div className="font-monument text-[9px] tracking-[0.3em] text-[#e5d3b3] mb-2 uppercase text-center">ŠKOLENÍ</div>
+            <h3 className="font-editorial text-xl md:text-2xl mb-5 text-center">{srvT?.title || activeService.title}</h3>
+            {appSubmitted ? (
+              <div className="text-center py-8">
+                <div className="text-3xl mb-3">✓</div>
+                <p className="font-montreal text-sm text-white/70">Vaše anketa byla odeslána. Budeme vás kontaktovat.</p>
+                <button onClick={() => setShowApplication(false)} className="mt-6 px-6 py-2 bg-white/10 rounded-full font-monument text-[10px] tracking-widest hover:bg-white/20 transition-colors">Zavřít</button>
+              </div>
+            ) : (
+              <form onSubmit={e => {
+                e.preventDefault();
+                if (!appForm.name.trim() || !appForm.email.trim()) return;
+                const apps = JSON.parse(localStorage.getItem('kbk_skoleni_apps') || '[]');
+                apps.push({ id: Date.now(), ...appForm, service: activeService.title, date: new Date().toISOString(), status: 'new' });
+                localStorage.setItem('kbk_skoleni_apps', JSON.stringify(apps));
+                setAppSubmitted(true);
+              }} className="flex flex-col gap-4">
+                <div>
+                  <label className="font-montreal text-xs text-[#e5d3b3] block mb-1">Vaše jméno</label>
+                  <input required value={appForm.name} onChange={e => setAppForm({...appForm, name: e.target.value})}
+                    className="w-full bg-black/40 border border-[#e5d3b3]/30 rounded-lg px-4 py-3 font-montreal text-sm text-white placeholder-white/30 focus:border-[#e5d3b3] outline-none" placeholder="Vaše jméno" />
+                </div>
+                <div>
+                  <label className="font-montreal text-xs text-[#e5d3b3] block mb-1">Váš e-mail</label>
+                  <input required type="email" value={appForm.email} onChange={e => setAppForm({...appForm, email: e.target.value})}
+                    className="w-full bg-black/40 border border-[#e5d3b3]/30 rounded-lg px-4 py-3 font-montreal text-sm text-white placeholder-white/30 focus:border-[#e5d3b3] outline-none" placeholder="Váš e-mail" />
+                </div>
+                <div>
+                  <label className="font-montreal text-xs text-[#e5d3b3] block mb-1">Vaše zpráva (volitelný)</label>
+                  <textarea value={appForm.message} onChange={e => setAppForm({...appForm, message: e.target.value})}
+                    className="w-full bg-black/40 border border-[#e5d3b3]/30 rounded-lg px-4 py-3 font-montreal text-sm text-white placeholder-white/30 focus:border-[#e5d3b3] outline-none h-28 resize-none" placeholder="Vaše zpráva (volitelný)" />
+                </div>
+                <button type="submit" className="w-full py-3 bg-[#e5d3b3] text-black font-monument text-[10px] tracking-[0.2em] rounded-lg hover:bg-white transition-colors">Odeslat anketu</button>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
 
       <AnimatePresence />
     </motion.div>
