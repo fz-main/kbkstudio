@@ -173,7 +173,7 @@ function MainApp() {
   ].filter(col => SERVICES.some(s => col.categories.includes(s.category)));
 
   return (
-    <div className="w-screen h-screen bg-[#0a0a0a] text-[#f8f5f2] relative selection:bg-[#e5d3b3] selection:text-black">
+    <div className="w-screen h-screen bg-[#0a0a0a] text-[#f8f5f2] relative selection:bg-[#e5d3b3] selection:text-black overflow-hidden" style={{ touchAction: 'none' }}>
       {lightboxImage && (
         <div className="fixed inset-0 z-[200] bg-black/90 flex items-center justify-center cursor-pointer" onClick={closeLightbox}>
           <img src={lightboxImage} alt="Lightbox" className="max-w-[90vw] max-h-[90vh] object-contain" />

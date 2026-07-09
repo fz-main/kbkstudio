@@ -20,11 +20,8 @@
   }
   
   body {
-    overflow: hidden;
-    overscroll-behavior: none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    touch-action: none;
   }
   
   h1, h2, h3, h4, h5, h6 {
